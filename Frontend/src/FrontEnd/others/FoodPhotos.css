@@ -1,0 +1,20 @@
+.photo-container {
+    background-color: blue;
+    border: 5px solid purple;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .photo-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .food-photo {
+    width: 40%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
