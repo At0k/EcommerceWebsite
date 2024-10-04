@@ -1,25 +1,26 @@
 // App.js
 import { Routes, Route } from "react-router-dom";
 import AdminPages from "./AdminPages";
-
+import ProductDetail from "./products/detail/ProductDetail";
+import ProductList from "./products/ProductList";
+import Landing from "./landing/Landing";
 import StaffPages from "./StaffPages";
 import SignInSide from "./FrontEnd/login/SignInSide";
-import FoodPhotos from "./FrontEnd/others/FoodPhotos";
+
 
 function App() {
   return (
     <>
     <Routes>
     <Route
-        path="/"
+        path="/sign-in"
         element={
             <SignInSide />
         }
       />
-    <Route
-      path="/food-photos"
-      element={ <FoodPhotos /> }
-    />  
+      <Route path="/products" element={<ProductList />}/>
+        <Route path="/products/:slug" element={<ProductDetail />}/>
+        <Route path="/" element={<Landing />}/>
     </Routes>
       <AdminPages />
       <StaffPages />
