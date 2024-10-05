@@ -48,23 +48,23 @@ public class Customer extends Users{
     }
 
     //getter
-    public String username(){
+    public String getUsername(){
         return username;
     }
 
-    public String password(){
+    public String getPassword(){
         return password;
     }
 
-    public String fullname(){
+    public String getFullname(){
         return fullname;
     }
 
-    public String email(){
+    public String getEmail(){
         return email;
     }
 
-    public String phoneNo(){
+    public String getPhoneNo(){
         return phoneNo;
     }
 }

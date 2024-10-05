@@ -36,7 +36,8 @@ public class ProductServices {
         }
         return null;
     }
-    public void deleteBook(String id) {
+    public void deleteProduct(String id) {
         productRepository.deleteById(id);
     }
+    
 }

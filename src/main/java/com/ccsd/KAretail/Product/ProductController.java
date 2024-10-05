@@ -32,16 +32,16 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product productDetails) {
-        Product updatedBook = productService.updateProduct(id, productDetails);
-        if (updatedBook != null) {
-            return ResponseEntity.ok(updatedBook);
+        Product updatedProduct = productService.updateProduct(id, productDetails);
+        if (updatedProduct != null) {
+            return ResponseEntity.ok(updatedProduct);
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
-        productService.deleteBook(id);
+        productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 }
