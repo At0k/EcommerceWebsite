@@ -43,4 +43,11 @@ public class CustomerServices {
     public void deleteCustomer(String id) {
         customerRepository.deleteById(id);
     }
+    // public Customer register(Customer customer) {
+    //     if(customerRepository.findById(customer.getEmail()) != null) {
+    //         throw new RuntimeException("Email already exists");
+    //     }
+    //     customer.setPassword(customer.getPassword());
+    //     return customerRepository.save(customer);
+    // }
 }

@@ -1,7 +1,9 @@
 package com.ccsd.KAretail.Customer;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,4 +47,14 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
+
+    // @PostMapping("/register")
+    // public ResponseEntity<Customer> register(@RequestBody Customer customer) {
+    //     try {
+    //         Customer newCustomer = customerService.register(customer);
+    //         return ResponseEntity.ok(newCustomer);
+    //     } catch (RuntimeException e) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    //     }
+    // }
 }

@@ -5,18 +5,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.ccsd.KAretail.Users.Users;
 @Document(collection = "customer")
-
-public class Customer extends Users{
+public class Customer {
     
     @Id
-    private int id ;
+    private String id;
     private String username;
     private String password;
     private String fullname;
     private String email;
     private String phoneNo;
 
-    public Customer(int id, String username, String password, String fullname, String email, String phoneNo){
+    public Customer(String id, String username, String password, String fullname, String email, String phoneNo){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -26,6 +25,9 @@ public class Customer extends Users{
     }                                                                   
 
     //setter
+    public void setId(String id){
+        this.id = id;
+    }
 
     public void setUsername(String username){
         this.username = username;
@@ -48,6 +50,9 @@ public class Customer extends Users{
     }
 
     //getter
+    public String getId(){
+        return id;
+    }
     public String getUsername(){
         return username;
     }
