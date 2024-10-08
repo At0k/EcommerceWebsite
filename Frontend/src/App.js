@@ -12,15 +12,10 @@ function App() {
   return (
     <>
     <Routes>
-    <Route
-        path="/sign-in"
-        element={
-            <SignInSide />
-        }
-      />
+      <Route path="/sign-in" element={<SignInSide />} />
       <Route path="/products" element={<ProductList />}/>
-        <Route path="/products/:slug" element={<ProductDetail />}/>
-        <Route path="/" element={<Landing />}/>
+      <Route path="/products/:slug" element={<ProductDetail />}/>
+      <Route path="/" element={<Landing />}/>
     </Routes>
       <AdminPages />
       <StaffPages />
