@@ -53,17 +53,17 @@ public class UserController {
         if (session.getAttribute("userId") == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized. Please log in.");
         }
-
         int role = (int) session.getAttribute("role");
-    if (role == 1) {
-        return ResponseEntity.ok("Welcome Admin");
-    } else if (role == 3) {
-        return ResponseEntity.ok("Welcome Customer");
-    } else if (role == 2) {
-        return ResponseEntity.ok("Welcome Staff");
-    } else {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-    }
+        if (role == 1) {
+            return ResponseEntity.ok("Welcome Admin");
+        } else if (role == 3) {
+            return ResponseEntity.ok("Welcome Customer");
+        } else if (role == 2) {
+            return ResponseEntity.ok("Welcome Staff");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        }
+        
         // String role = (String) session.getAttribute("role");
         // if("Admin".equals(role)){
         //     return ResponseEntity.ok("Welcome Admin");
