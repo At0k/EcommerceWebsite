@@ -1,37 +1,55 @@
-package com.ccsd.KAretail.Staff;
+package com.ccsd.KAretail.Users;
 
-import com.ccsd.KAretail.Users.Users;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-@Document(collection = "staff")
-public class Staff extends Users {
+@Document(collection = "customer")
+public class User {
+    
     @Id
     private String id;
     private String username;
     private String password;
+    private String fullname;
     private String email;
+    private String phoneNo;
+    private int role;
 
-    public Staff(String id, String username, String password, String email){
+    public User(String id, String username, String password, String fullname, String email, String phoneNo, int role){
         this.id = id;
         this.username = username;
         this.password = password;
+        this.fullname = fullname;
         this.email = email;
-    }         
-    
-     //setter
+        this.phoneNo = phoneNo;
+        this.role = role;
+    }                                                                   
+
+    //setter
     public void setId(String id){
         this.id = id;
-    } 
+    }
     public void setUsername(String username){
         this.username = username;
     }
+
     public void setPassword(String password){
         this.password = password;
     }
+
+    public void setFullname(String fullname){
+        this.fullname = fullname;
+    }
+
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public void setPhoneNo(String phoneNo){
+        this.phoneNo = phoneNo;
+    }
+    public void setRole(int role){
+        this.role = role;
     }
 
     //getter
@@ -41,11 +59,23 @@ public class Staff extends Users {
     public String getUsername(){
         return username;
     }
+
     public String getPassword(){
         return password;
     }
+
+    public String getFullname(){
+        return fullname;
+    }
+
     public String getEmail(){
         return email;
     }
 
+    public String getPhoneNo(){
+        return phoneNo;
+    }
+    public int getRole(){
+        return role;
+    }
 }
