@@ -35,7 +35,7 @@ public class UserServices {
             user.setUsername(userDetails.getUsername());
             user.setPassword(userDetails.getPassword());
             user.setFullname(userDetails.getFullname());
-            user.setPhoneNo(user.getPhoneNo());
+            user.setPhoneNo(userDetails.getPhoneNo());
             user.setRole(userDetails.getRole());
             return userRepository.save(user);
         }
@@ -45,6 +45,7 @@ public class UserServices {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
+
 
     public User loginUser(String username, String password) {
         User user = userRepository.findByUsername(username);
@@ -60,5 +61,14 @@ public class UserServices {
     //      }
     //      customer.setPassword(customer.getPassword());
     //      return customerRepository.save(customer);
+
+    // public User register(User user) {
+    //     if(userRepository.findById(user.getEmail()) != null) {
+    //         throw new RuntimeException("Email already exists");
+    //     }
+    //     user.setEmail(user.getEmail());
+    //     user.setPassword(user.getPassword());
+    //     return userRepository.save(user);
+
     //  }
 }
