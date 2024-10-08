@@ -32,7 +32,7 @@ public class UserServices {
             user.setUsername(userDetails.getUsername());
             user.setPassword(userDetails.getPassword());
             user.setFullname(userDetails.getFullname());
-            user.setPhoneNo(user.getPhoneNo());
+            user.setPhoneNo(userDetails.getPhoneNo());
             user.setRole(userDetails.getRole());
             return userRepository.save(user);
         }
@@ -42,11 +42,12 @@ public class UserServices {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
-    // public Customer register(Customer customer) {
-    //     if(customerRepository.findById(customer.getEmail()) != null) {
+    // public User register(User user) {
+    //     if(userRepository.findById(user.getEmail()) != null) {
     //         throw new RuntimeException("Email already exists");
     //     }
-    //     customer.setPassword(customer.getPassword());
-    //     return customerRepository.save(customer);
-    // }
+    //     user.setEmail(user.getEmail());
+    //     user.setPassword(user.getPassword());
+    //     return userRepository.save(user);
+    //  }
 }
