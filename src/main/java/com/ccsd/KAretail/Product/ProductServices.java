@@ -29,9 +29,12 @@ public class ProductServices {
         if (productOpt.isPresent()) {
 
             Product product = productOpt.get();
+            product.setCode(productDetails.getCode());
+            product.setImage(productDetails.getImage());
             product.setProductName(productDetails.getProductName());
             product.setPrice(productDetails.getPrice());
             product.setDescription(productDetails.getDescription());
+            product.setQuantity(productDetails.getQuantity());
             return productRepository.save(product);
         }
         return null;
