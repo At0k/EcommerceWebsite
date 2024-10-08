@@ -6,11 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @Service
 public class UserServices {
      
     @Autowired
     private UserRepository userRepository;
+    private User user;
 
     public List<User> getAllUser() {
         return userRepository.findAll();
@@ -42,11 +45,20 @@ public class UserServices {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
-    // public Customer register(Customer customer) {
-    //     if(customerRepository.findById(customer.getEmail()) != null) {
-    //         throw new RuntimeException("Email already exists");
-    //     }
-    //     customer.setPassword(customer.getPassword());
-    //     return customerRepository.save(customer);
-    // }
+
+    public User loginUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
+
+    //  public Customer register(Customer customer) {
+    //      if(customerRepository.findById(customer.getEmail()) != null) {
+    //          throw new RuntimeException("Email already exists");
+    //      }
+    //      customer.setPassword(customer.getPassword());
+    //      return customerRepository.save(customer);
+    //  }
 }
