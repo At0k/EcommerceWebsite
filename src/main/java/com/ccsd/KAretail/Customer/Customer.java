@@ -2,8 +2,8 @@ package com.ccsd.KAretail.Customer;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.ccsd.KAretail.Users.Users;
+
 @Document(collection = "customer")
 
 public class Customer extends Users{

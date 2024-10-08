@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 
 @Document(collection = "order")
+
 public class Order {
+    
     @Id
     private int orderId;
     private LocalDate orderDate;
