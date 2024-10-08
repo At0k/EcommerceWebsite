@@ -1,5 +1,6 @@
 package com.ccsd.KAretail.Order;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccsd.KAretail.Order.Order;
 import com.ccsd.KAretail.Order.OrderRepository;
+import com.ccsd.KAretail.Product.Product;
 
 @Service
 public class OrderServices {
@@ -40,5 +42,17 @@ public class OrderServices {
     }
     public void deleteOrder(String id) {
         orderRepository.deleteById(id);
+    }
+
+    //checkout process
+    public Order checkout(List<Product> productList){
+        int orderId = generateOrderId();
+        LocalDate orderDate = LocalDate.now();
+        Order newOrder = new Order(orderId, orderDate, productList);
+        return orderRepository.save(newOrder);
+    }
+
+    private int generateOrderId() {
+        return (int) (Math.random() * 10000); 
     }
 }

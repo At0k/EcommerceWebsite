@@ -10,18 +10,23 @@ public class Product {
     private String productName;
     private double price;
     private String description;
+    private int quantity;
 
-    public Product(String id, String code, String productName, double price, String description){
+    public Product(String id, String code, String productName, double price, String description, int quantity){
         this.id = id;
         this.code = code;
         this.productName = productName;
         this.price = price;
         this.description = description;
+        this.quantity = quantity;
     }               
     
     //setter
     public void setId(String id) {
         this.id = id;
+    }
+    public void setCode(String code){
+        this.code = code;
     }
     public void setProductName(String productName){
         this.productName = productName;
@@ -32,10 +37,16 @@ public class Product {
     public void setDescription(String description){
         this.description = description;
     }
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
 
     //getter
     public String getId() {
         return id;
+    }
+    public String getCode(){
+        return code;
     }
     public String getProductName(){
         return productName;
@@ -45,5 +56,12 @@ public class Product {
     }
     public String getDescription(){
         return description;
+    }
+    public int getQuantity(){
+        return quantity;
+    }
+
+    public double calculateTotalPrice() {
+        return this.price * this.quantity;
     }
 }
