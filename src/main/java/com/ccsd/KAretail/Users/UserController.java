@@ -63,7 +63,6 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         }
-        
         // String role = (String) session.getAttribute("role");
         // if("Admin".equals(role)){
         //     return ResponseEntity.ok("Welcome Admin");
