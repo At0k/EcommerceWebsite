@@ -60,13 +60,4 @@ public class UserController {
             default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         };
     }
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        try {
-            User newUser = userService.registerUser(user);
-            return ResponseEntity.ok(newUser);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
 }

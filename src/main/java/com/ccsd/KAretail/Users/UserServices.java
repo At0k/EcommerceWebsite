@@ -23,17 +23,8 @@ public class UserServices {
     }
 
     public User addUser(User user){
-        return userRepository.save(user);
-    }
-
-    public User registerUser(User user){
-        user.setRole(2);
-        return userRepository.save(user);
-    }
-
-    public User registrerUser(User user){
         if (userRepository.findByUsername(user.getUsername()) != null){
-            throw  new RuntimeException("Username already taken");
+            throw new RuntimeException("Username already taken");
         }
         return userRepository.save(user);
     }
@@ -56,7 +47,6 @@ public class UserServices {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
-
 
     public User loginUser(String username, String password) {
         User user = userRepository.findByUsername(username);
