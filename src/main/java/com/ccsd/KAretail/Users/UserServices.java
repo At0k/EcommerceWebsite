@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.init.UnmarshallerRepositoryPopulatorFactoryBean;
 import org.springframework.stereotype.Service;
 
 
@@ -22,6 +23,18 @@ public class UserServices {
     }
 
     public User addUser(User user){
+        return userRepository.save(user);
+    }
+
+    public User registerUser(User user){
+        user.setRole(2);
+        return userRepository.save(user);
+    }
+
+    public User registrerUser(User user){
+        if (userRepository.findByUsername(user.getUsername()) != null){
+            throw  new RuntimeException("Username already taken");
+        }
         return userRepository.save(user);
     }
 

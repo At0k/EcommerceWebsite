@@ -49,38 +49,24 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<String> dashboard(HttpSession session){
-        if (session.getAttribute("userId") == null){
+    public ResponseEntity<String> dashboard(HttpSession session) {
+        if (session.getAttribute("userId") == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized. Please log in.");
         }
         int role = (int) session.getAttribute("role");
-        if (role == 1) {
-            return ResponseEntity.ok("Welcome Admin");
-        } else if (role == 3) {
-            return ResponseEntity.ok("Welcome Customer");
-        } else if (role == 2) {
-            return ResponseEntity.ok("Welcome Staff");
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        }
-        // String role = (String) session.getAttribute("role");
-        // if("Admin".equals(role)){
-        //     return ResponseEntity.ok("Welcome Admin");
-        // } else if("Customer".equals(role)){
-        //     return ResponseEntity.ok("Welcome Customer");
-        // }else if ("Staff".equals(role)) {
-        //     return ResponseEntity.ok("Welcome Staff");
-        // } else {
-        //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        // }
+        return switch (role) {
+            case 1 -> ResponseEntity.ok("Welcome Customer");
+            case 2 -> ResponseEntity.ok("Welcome Staff");
+            default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        };
     }
-    // @PostMapping("/register")
-    // public ResponseEntity<Customer> register(@RequestBody Customer customer) {
-    //     try {
-    //         Customer newCustomer = customerService.register(customer);
-    //         return ResponseEntity.ok(newCustomer);
-    //     } catch (RuntimeException e) {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    //     }
-    // }
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
+        try {
+            User newUser = userService.registerUser(user);
+            return ResponseEntity.ok(newUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 }
