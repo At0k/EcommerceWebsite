@@ -3,18 +3,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import { useNavigate, Link as RouterLink } from 'react-router-dom'; // Import RouterLink
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AuthService from '../../Auth/AuthService';
-
+import Paper from '@mui/material/Paper';
+import MenuItem from '@mui/material/MenuItem'; 
+import AuthService from '../../Auth/AuthService'; 
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -29,41 +27,35 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
-export default function SignInSide() {
-
+export default function SignUpSide() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedInAdmin, setIsLoggedInAdmin] = useState(false); // Add this line
-
+  const [phoneNo, setPhoneNo] = useState("");
+  const [role, setRole] = useState(""); // Role of the user
+  const [fullname, setFullname] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-  
+    event.preventDefault();
+    
     try {
-      const success = await AuthService.login(email, password);
-      const userType = await localStorage.getItem('userType');
+      const success = await AuthService.register(username, email, password, phoneNo, role, fullname);
       
-      if (success && userType === "1" ) {
-        setIsLoggedInAdmin(true);
-        navigate("/dashboard-admin");
-      } else if (success && userType === "2") {
-        navigate("/dashboard-staff");
-      
+      if (success) {
+        alert("Registration successful! You can now sign in.");
+        navigate("/signin"); // Redirect to the sign-in page
       } else {
-        // Handle login failure and display an error message to the user
-        alert("Login failed. Please check your credentials.");
+        alert("Registration failed. Please try again.");
       }
     } catch (error) {
-      // Handle network or other errors
-      console.error("Login error:", error);
-      alert("An error occurred while logging in.");
+      console.error("Registration error:", error);
+      alert("An error occurred during registration.");
     }
-  }
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -96,10 +88,31 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign Up
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
+              <TextField
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Full Name"
+                name="name"
+              />
+              <TextField
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+              />
+              <TextField
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 margin="normal"
                 required
@@ -107,10 +120,9 @@ export default function SignInSide() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
-                autoFocus
               />
               <TextField
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 margin="normal"
                 required
@@ -119,30 +131,43 @@ export default function SignInSide() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+              <TextField
+                value={phoneNo}
+                onChange={(e) => setPhoneNo(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="phoneNo"
+                label="Phone Number"
+                name="phoneNo"
               />
+              <TextField
+                select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="role"
+                label="Role"
+                name="role"
+              >
+                <MenuItem value="Staff">Staff</MenuItem>
+                <MenuItem value="Customer">Customer</MenuItem>
+              </TextField>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                
               >
-                Sign In
+                Sign Up
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
-                  <Link component={RouterLink} to="/sign-up" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                  <Link component={RouterLink} to="/signin" variant="body2">
+                    {"Already have an account? Sign In"}
                   </Link>
                 </Grid>
               </Grid>
