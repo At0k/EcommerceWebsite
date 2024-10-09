@@ -85,7 +85,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+
     @GetMapping("/dashboard")
+
+    @GetMapping("/login")
     public ResponseEntity<String> dashboard(HttpSession session) {
         if (session.getAttribute("userId") == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized. Please log in.");
@@ -100,6 +103,19 @@ public class UserController {
             return ResponseEntity.ok("Welcome Customer");
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        return switch (role) {
+            case 1 -> ResponseEntity.ok("Welcome Customer");
+            case 2 -> ResponseEntity.ok("Welcome Staff");
+            default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        };
+    }
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
+        try {
+            User newUser = userService.registerUser(user);
+            return ResponseEntity.ok(newUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 }
