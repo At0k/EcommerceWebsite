@@ -29,6 +29,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam; 
 import org.springframework.web.bind.annotation.RestController; 
 import org.springframework.web.multipart.MultipartFile; 
+import java.util.List;
+  
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
   
 // Annotation 
 @RestController
@@ -71,6 +76,41 @@ public class ProductController {
     }
 
       
+    @Autowired
+    private ProductServices productService;
+
+    @GetMapping
+    public List<Product> getAllProduct() {
+        return productService.getAllProduct();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+        return productService.getProductById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product productDetails) {
+        Product updatedProduct = productService.updateProduct(id, productDetails);
+        if (updatedProduct != null) {
+            return ResponseEntity.ok(updatedProduct);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
+
     // Uploading a file 
     @RequestMapping(value = "/upload", method = RequestMethod.POST) 
     public String uploadFile(@RequestParam("file") MultipartFile file){ 
@@ -153,5 +193,4 @@ public class ProductController {
                 .body(resource);  
           
     } 
-    
 }
