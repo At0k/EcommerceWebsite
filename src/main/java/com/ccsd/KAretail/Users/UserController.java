@@ -68,12 +68,28 @@ public class UserController {
     //Forgot Password---------------------------------------
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> request) {
-        String email = request.get("Email");
-        User user = userRepository.findByUsername(email);
+        String email = request.get("email");
+        User user = userRepository.findByEmail(email);
         
         if (user != null) {
             // Allow the user to directly reset the password
             return ResponseEntity.ok("Email verified. You can reset your password.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found.");
+    }
+
+    //Reset Password----------------------------------------
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request){
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            user.setPassword(newPassword);
+            userRepository.save(user);
+            return ResponseEntity.ok("Password updated");
+
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found.");
     }
