@@ -66,21 +66,4 @@ public class UserServices {
         }
         return null;
     }
-
-    //  public Customer register(Customer customer) {
-    //      if(customerRepository.findById(customer.getEmail()) != null) {
-    //          throw new RuntimeException("Email already exists");
-    //      }
-    //      customer.setPassword(customer.getPassword());
-    //      return customerRepository.save(customer);
-
-    // public User register(User user) {
-    //     if(userRepository.findById(user.getEmail()) != null) {
-    //         throw new RuntimeException("Email already exists");
-    //     }
-    //     user.setEmail(user.getEmail());
-    //     user.setPassword(user.getPassword());
-    //     return userRepository.save(user);
-
-    //  }
 }
