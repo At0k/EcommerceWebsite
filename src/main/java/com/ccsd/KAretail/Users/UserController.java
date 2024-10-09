@@ -1,10 +1,12 @@
 package com.ccsd.KAretail.Users;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     private UserServices userService;
+    private UserRepository userRepository;
     
     @GetMapping
     public List<User> getAllUser() {
@@ -48,6 +51,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    //Login-------------------------------------------------
     @GetMapping("/login")
     public ResponseEntity<String> dashboard(HttpSession session) {
         if (session.getAttribute("userId") == null) {
@@ -60,4 +64,18 @@ public class UserController {
             default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         };
     }
+
+    //Forgot Password---------------------------------------
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("Email");
+        User user = userRepository.findByUsername(email);
+        
+        if (user != null) {
+            // Allow the user to directly reset the password
+            return ResponseEntity.ok("Email verified. You can reset your password.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found.");
+    }
+
 }

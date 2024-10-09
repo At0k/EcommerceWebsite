@@ -48,11 +48,11 @@ public class UserServices {
         userRepository.deleteById(id);
     }
 
-    public User loginUser(String username, String password) {
+    public User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if (user == null) {
+            throw new RuntimeException("User not found");
         }
-        return null;
+        return user;
     }
 }

@@ -13,7 +13,7 @@ public class User {
     private String fullname;
     private String email;
     private String phoneNo;
-    private int role; // 1.admin 2.customer 3.staff
+    private int role; // 1.Staff 2.Customer
 
     public User(String id, String username, String password, String fullname, String email, String phoneNo, int role){
         this.id = id;
