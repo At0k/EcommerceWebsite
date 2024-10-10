@@ -114,6 +114,8 @@ public class UserController {
             default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         };
     }
+    
+
 
     //Forgot Password---------------------------------------
     @PostMapping("/forgot-password")

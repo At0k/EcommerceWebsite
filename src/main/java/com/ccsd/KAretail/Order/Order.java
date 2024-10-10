@@ -50,10 +50,12 @@ public class Order {
 
     //method
     private double calculateTotalAmount() {
+        //return productList.stream().mapToDouble(Product::calculateTotalPrice).sum();
         float total = 0;
         for (Product product : productList) {
             total += product.calculateTotalPrice();
         }
         return total;
+        
     }
 }
