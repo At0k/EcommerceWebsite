@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,13 +33,17 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> addUser(@RequestBody User user) {
         // Check if the email already exists
-        if (userRepository.findByEmail(user.getEmail()) != null){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email already exists");
-        }
+        // User repo = userRepository.findByEmail(user.getEmail());
+        // if (repo != null ){
+        //     return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email already exists");
+        // } else {
+        userService.addUser(user);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        // }
         
         // Save the new user (password in plain text)
-        userService.addUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+
     }
 
     @PostMapping("/login")
@@ -96,14 +99,15 @@ public class UserController {
         }
 
         int role = (int) session.getAttribute("role");
-        if (role == 1) {
-            return ResponseEntity.ok("Welcome Admin");
-        } else if (role == 2) {
-            return ResponseEntity.ok("Welcome Staff");
-        } else if (role == 3) {
-            return ResponseEntity.ok("Welcome Customer");
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        // if (role == 1) {
+        //     return ResponseEntity.ok("Welcome Admin");
+        // } else if (role == 2) {
+        //     return ResponseEntity.ok("Welcome Staff");
+        // } else if (role == 3) {
+        //     return ResponseEntity.ok("Welcome Customer");
+        // } else {
+        //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        
         return switch (role) {
             case 1 -> ResponseEntity.ok("Welcome Customer");
             case 2 -> ResponseEntity.ok("Welcome Staff");
@@ -141,3 +145,5 @@ public class UserController {
     }
 
 }
+
+
