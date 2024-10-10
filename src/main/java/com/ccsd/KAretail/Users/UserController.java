@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ccsd.KAretail.Product.Product;
+
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -31,15 +33,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
+    public User addUser(@RequestBody User user) {
         // Check if the email already exists
         // User repo = userRepository.findByEmail(user.getEmail());
         // if (repo != null ){
         //     return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email already exists");
         // } else {
-        userService.addUser(user);
         
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+
+        return userService.addUser(user);
         // }
         
         // Save the new user (password in plain text)
@@ -50,10 +52,8 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-
-        // Find the user by email
-        User user = userRepository.findByEmail(email);
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        User user = userService.findByEmail(email);
+        if (userService.findByEmail(user.getEmail()) != null) {
             // Validate password (without encryption)
             if (password.equals(user.getPassword())) {
                 // Store user info in session
@@ -98,21 +98,22 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized. Please log in.");
         }
 
-        int role = (int) session.getAttribute("role");
-        // if (role == 1) {
-        //     return ResponseEntity.ok("Welcome Admin");
-        // } else if (role == 2) {
-        //     return ResponseEntity.ok("Welcome Staff");
-        // } else if (role == 3) {
-        //     return ResponseEntity.ok("Welcome Customer");
-        // } else {
-        //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        
-        return switch (role) {
-            case 1 -> ResponseEntity.ok("Welcome Customer");
-            case 2 -> ResponseEntity.ok("Welcome Staff");
-            default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        };
+        // int role = (int) session.getAttribute("role");
+        String role = (String) session.getAttribute("role");
+
+        if(role.equalsIgnoreCase("Customer")){
+            return ResponseEntity.ok("Welcome Customer");
+        }else if(role.equalsIgnoreCase("Staff")){
+            return ResponseEntity.ok("Welcome Staff");
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        }
+    
+        // return switch (role) {
+        //     case 1 -> ResponseEntity.ok("Welcome Customer");
+        //     case 2 -> ResponseEntity.ok("Welcome Staff");
+        //     default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        // };
     }
     
 

@@ -13,9 +13,9 @@ public class User {
     private String fullname;
     private String email;
     private String phoneNo;
-    private int role; // 1.Staff 2.Customer
+    private String role; // 1.Staff 2.Customer
 
-    public User(String id, String username, String password, String fullname, String email, String phoneNo, int role){
+    public User(String id, String username, String password, String fullname, String email, String phoneNo, String role){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -48,7 +48,7 @@ public class User {
     public void setPhoneNo(String phoneNo){
         this.phoneNo = phoneNo;
     }
-    public void setRole(int role){
+    public void setRole(String role){
         this.role = role;
     }
 
@@ -75,7 +75,12 @@ public class User {
     public String getPhoneNo(){
         return phoneNo;
     }
-    public int getRole(){
+    public String getRole(){
         return role;
+    }
+
+    public Object findByEmail(String email2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByEmail'");
     }
 }

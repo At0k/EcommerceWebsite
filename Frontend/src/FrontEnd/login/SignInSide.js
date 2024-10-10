@@ -29,14 +29,13 @@ function Copyright(props) {
   );
 }
 
-
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedInAdmin, setIsLoggedInAdmin] = useState(false); // Add this line
+  const [isLoggedInAdmin, setIsLoggedInAdmin] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -45,18 +44,38 @@ export default function SignInSide() {
   
     try {
       const success = await AuthService.login(email, password);
-      const userType = await localStorage.getItem('userType');
-      
-      if (success && userType === "1" ) {
-        setIsLoggedInAdmin(true);
-        navigate("/dashboard-admin");
-      } else if (success && userType === "2") {
-        navigate("/dashboard-staff");
-      
+    
+      if (success) {
+        // After login, retrieve the role from localStorage
+        const userType = localStorage.getItem('role');
+        
+        // Check the userType and redirect accordingly
+        if (userType === "Customer") {
+          navigate("/dashboard-customer");  // Correct this path if necessary
+        } else if (userType === "Staff") {
+          navigate("/dashboard-staff");  // Correct this path if necessary
+        } else {
+          // Handle unexpected role
+          alert("Unknown user role.");
+        }
       } else {
         // Handle login failure and display an error message to the user
         alert("Login failed. Please check your credentials.");
       }
+      // const success = await AuthService.login(email, password);
+      // const userType = localStorage.getItem('role');
+      
+      // if (success && userType === "Customer") {
+      //   setIsLoggedInAdmin(true);
+      //   navigate("/dashboard-admin");
+      // } else 
+      // if (success && userType === "Staff") {
+      //   navigate("/dashboard-staff");
+      
+      // } else {
+      //   // Handle login failure and display an error message to the user
+      //   alert("Login failed. Please check your credentials.");
+      // }
     } catch (error) {
       // Handle network or other errors
       console.error("Login error:", error);
