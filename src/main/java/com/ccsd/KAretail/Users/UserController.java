@@ -96,20 +96,14 @@ public class UserController {
         }
 
         int role = (int) session.getAttribute("role");
-        if (role == 1) {
-            return ResponseEntity.ok("Welcome Admin");
-        } else if (role == 2) {
-            return ResponseEntity.ok("Welcome Staff");
-        } else if (role == 3) {
-            return ResponseEntity.ok("Welcome Customer");
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         return switch (role) {
             case 1 -> ResponseEntity.ok("Welcome Customer");
             case 2 -> ResponseEntity.ok("Welcome Staff");
             default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         };
     }
+    
+
 
     //Forgot Password---------------------------------------
     @PostMapping("/forgot-password")
