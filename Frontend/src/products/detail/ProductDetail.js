@@ -87,7 +87,7 @@ function ProductDetail() {
         <div className="col-lg-5">
           <div className="d-flex flex-column h-100">
             <h2 className="mb-1">Nillkin iPhone X cover</h2>
-            <h4 className="text-muted mb-4">10000 Ks</h4>
+            <h4 className="text-muted mb-4">RM 5000</h4>
 
             <div className="row g-3 mb-4">
               <div className="col">

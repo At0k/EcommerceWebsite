@@ -31,8 +31,8 @@ function BannerImage(props) {
         />
       </div>
       <div className="carousel-caption d-none d-lg-block">
-        <h5>Banner Header</h5>
-        <p>Some representative placeholder content for the banner.</p>
+        <h5>Khairul Aming</h5>
+        <p>Sambal Nyet Pedas Giler</p>
       </div>
     </div>
   );
