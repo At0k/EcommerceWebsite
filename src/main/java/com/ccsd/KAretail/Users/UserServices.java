@@ -27,17 +27,8 @@ public class UserServices {
     }
 
     public User addUser(User user){
-        return userRepository.save(user);
-    }
-
-    public User registerUser(User user){
-        user.setRole(2);
-        return userRepository.save(user);
-    }
-
-    public User registrerUser(User user){
         if (userRepository.findByUsername(user.getUsername()) != null){
-            throw  new RuntimeException("Username already taken");
+            throw new RuntimeException("Username already taken");
         }
         return userRepository.save(user);
     }
@@ -61,29 +52,11 @@ public class UserServices {
         userRepository.deleteById(id);
     }
 
-
-    public User loginUser(String username, String password) {
+    public User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if (user == null) {
+            throw new RuntimeException("User not found");
         }
-        return null;
+        return user;
     }
-
-    //  public Customer register(Customer customer) {
-    //      if(customerRepository.findById(customer.getEmail()) != null) {
-    //          throw new RuntimeException("Email already exists");
-    //      }
-    //      customer.setPassword(customer.getPassword());
-    //      return customerRepository.save(customer);
-
-    // public User register(User user) {
-    //     if(userRepository.findById(user.getEmail()) != null) {
-    //         throw new RuntimeException("Email already exists");
-    //     }
-    //     user.setEmail(user.getEmail());
-    //     user.setPassword(user.getPassword());
-    //     return userRepository.save(user);
-
-    //  }
 }

@@ -1,10 +1,12 @@
 package com.ccsd.KAretail.Users;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
@@ -85,10 +87,9 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    //Login-------------------------------------------------
 
     @GetMapping("/dashboard")
-
-    @GetMapping("/login")
     public ResponseEntity<String> dashboard(HttpSession session) {
         if (session.getAttribute("userId") == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized. Please log in.");
@@ -109,13 +110,34 @@ public class UserController {
             default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         };
     }
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        try {
-            User newUser = userService.registerUser(user);
-            return ResponseEntity.ok(newUser);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+    //Forgot Password---------------------------------------
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        User user = userRepository.findByEmail(email);
+        
+        if (user != null) {
+            // Allow the user to directly reset the password
+            return ResponseEntity.ok("Email verified. You can reset your password.");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found.");
     }
+
+    //Reset Password----------------------------------------
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request){
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            user.setPassword(newPassword);
+            userRepository.save(user);
+            return ResponseEntity.ok("Password updated");
+
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found.");
+    }
+
 }
