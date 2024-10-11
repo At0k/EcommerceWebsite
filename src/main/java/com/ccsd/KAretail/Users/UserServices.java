@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class UserServices {
      
+    public static final ResponseEntity<String> user = null;
     @Autowired
     private UserRepository userRepository;
 
@@ -53,6 +55,14 @@ public class UserServices {
 
     public User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        return user;
+    }
+
+    public User findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new RuntimeException("User not found");
         }

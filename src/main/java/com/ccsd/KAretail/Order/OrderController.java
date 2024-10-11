@@ -5,7 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
+import com.ccsd.KAretail.Order.Order;
+import com.ccsd.KAretail.Order.OrderServices;
+=======
 import com.ccsd.KAretail.Product.Product;
+>>>>>>> e6aa59ff4dec15183883cb837bea0a69499c051d
 
 @RestController
 @RequestMapping("/api/Order")
@@ -44,6 +49,9 @@ public class OrderController {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
+<<<<<<< HEAD
+}
+=======
 
     @PostMapping("/checkout")
     public ResponseEntity<Order> checkout(@RequestBody List<Product> productList) {
@@ -51,3 +59,4 @@ public class OrderController {
         return ResponseEntity.ok(newOrder);
     }
 }
+>>>>>>> e6aa59ff4dec15183883cb837bea0a69499c051d
