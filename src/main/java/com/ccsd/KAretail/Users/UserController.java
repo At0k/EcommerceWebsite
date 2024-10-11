@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ccsd.KAretail.Product.Product;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -55,12 +54,14 @@ public class UserController {
         User user = userService.findByEmail(email);
         if (userService.findByEmail(user.getEmail()) != null) {
             // Validate password (without encryption)
-            if (password.equals(user.getPassword())) {
+            if (password.equals(user.getPassword()) && user != null) {
                 // Store user info in session
                 session.setAttribute("userId", user.getId());
                 session.setAttribute("role", user.getRole());
+                String role = user.getRole();
 
-                return ResponseEntity.ok("Login successful");
+
+                return ResponseEntity.ok(role);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
             }

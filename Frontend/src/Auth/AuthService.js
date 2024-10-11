@@ -18,10 +18,11 @@ const AuthService = {
       if (response.status === 200) {
 
         console.log('Login response:', response.data);
-        console.log('Login response:', response.data.role);
 
-        localStorage.setItem('userName', response.data.username);
-        localStorage.setItem('role', response.data.role);
+        // localStorage.setItem('userName', response.data.username);
+        localStorage.setItem('role', response.data);
+
+
         return true;
       }
     } catch (error) {

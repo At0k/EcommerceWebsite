@@ -2,6 +2,7 @@ package com.ccsd.KAretail.Users;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.ResponseEntity;
 
 @Document(collection = "user")
 public class User {
@@ -79,8 +80,4 @@ public class User {
         return role;
     }
 
-    public Object findByEmail(String email2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByEmail'");
-    }
 }
