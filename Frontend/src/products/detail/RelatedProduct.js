@@ -1,10 +1,10 @@
-import Image from "../../nillkin-case-1.jpg";
+import Image from "../../sambal-nyet-berapi.jpg";
 import { Link } from "react-router-dom";
 
 function RelatedProduct(props) {
-  const price = 10000;
+  const price = 14.99;
   let percentOff;
-  let offPrice = `${price}Ks`;
+  let offPrice = `RM${price}`;
 
   if (props.percentOff && props.percentOff > 0) {
     percentOff = (
@@ -18,7 +18,7 @@ function RelatedProduct(props) {
 
     offPrice = (
       <>
-        <del>{price}Ks</del> {price - (props.percentOff * price) / 100}Ks
+        <del>RM{price}</del> RM{price - (props.percentOff * price) / 100}
       </>
     );
   }
@@ -40,7 +40,7 @@ function RelatedProduct(props) {
         />
         <div className="card-body">
           <h5 className="card-title text-center text-dark text-truncate">
-            Nillkin iPhone X cover
+            Dendeng Nyet Berapi
           </h5>
           <p className="card-text text-center text-muted">{offPrice}</p>
         </div>

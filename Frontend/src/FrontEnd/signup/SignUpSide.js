@@ -46,11 +46,19 @@ export default function SignUpSide() {
       
       if (success) {
         alert("Registration successful! You can now sign in.");
-        navigate("/signin"); // Redirect to the sign-in page
+        navigate("/sign-in"); // Redirect to the sign-in page
       } else {
         alert("Registration failed. Please try again.");
       }
     } catch (error) {
+      console.log("username:"+ username);
+      console.log("email:"+ email);
+      console.log("password:"+ password);
+      console.log("phoneNo:"+ phoneNo);
+      console.log("role:"+ role);
+      console.log("fullname:"+ fullname);
+
+
       console.error("Registration error:", error);
       alert("An error occurred during registration.");
     }
@@ -166,7 +174,7 @@ export default function SignUpSide() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link component={RouterLink} to="/signin" variant="body2">
+                  <Link component={RouterLink} to="/sign-in" variant="body2">
                     {"Already have an account? Sign In"}
                   </Link>
                 </Grid>
