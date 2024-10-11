@@ -8,7 +8,9 @@ import java.util.List;
 import java.time.LocalDate;
 
 @Document(collection = "order")
+
 public class Order {
+    
     @Id
     private int orderId;
     private LocalDate orderDate;
