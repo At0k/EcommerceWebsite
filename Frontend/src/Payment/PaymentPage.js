@@ -3,20 +3,46 @@ import { Link } from "react-router-dom";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function PaymentPage() {
-  const [billingInfo, setBillingInfo] = useState({
-    name: "",
-    address: "",
-    city: "",
-    postalCode: "",
-    country: "",
-    paymentMethod: "creditCard",
-  });
+import AuthService from '../Auth/AuthService'; 
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
-  const [products] = useState([
-    { id: 1, name: "Nillkin iPhone X cover", price: 10000, quantity: 1 },
-    { id: 2, name: "Remax USB Cable", price: 5000, quantity: 2 },
-  ]);
+export default function PaymentPage() {
+  // const [billingInfo, setBillingInfo] = useState({
+  //   name: "",
+  //   address: "",
+  //   city: "",
+  //   postalCode: "",
+  //   country: "",
+  //   paymentMethod: "creditCard",
+  // });
+
+  // const [products] = useState([
+  //   { id: 1, name: "Nillkin iPhone X cover", price: 10000, quantity: 1 },
+  //   { id: 2, name: "Remax USB Cable", price: 5000, quantity: 2 },
+  // ]);
+
+  
+
+  // const totalPrice = products.reduce(
+  //   (acc, product) => acc + product.price * product.quantity,
+  //   0
+  // );
+
+  // const handlePaymentSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Simulate payment process
+  //   console.log("Payment details:", billingInfo);
+  //   setPaymentSuccess(true);
+  // };
+
+  //-----------------------------------------
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [country, setCountry] = useState(""); 
+  const [billingInfo, setBillingInfo] = useState("");
+  const navigate = useNavigate();
 
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
@@ -27,16 +53,23 @@ function PaymentPage() {
     });
   };
 
-  const totalPrice = products.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0
-  );
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const success = await AuthService.billing(name, address, city, postalCode, country);
+      
+      if (success) {
+        alert("Payment Success");
+        navigate("/products"); 
+      } else {
+        alert("Payment failed. Please try again.");
+      }
+    } catch (error) {
 
-  const handlePaymentSubmit = (e) => {
-    e.preventDefault();
-    // Simulate payment process
-    console.log("Payment details:", billingInfo);
-    setPaymentSuccess(true);
+      console.error("Payment error:", error);
+      alert("An error occurred during payment.");
+    }
   };
 
   return (
@@ -49,15 +82,15 @@ function PaymentPage() {
         {/* Left Section - Billing Information */}
         <div className="col-lg-6">
           {!paymentSuccess ? (
-            <form onSubmit={handlePaymentSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label className="form-label">Full Name</label>
                 <input
                   type="text"
                   className="form-control"
                   name="name"
-                  value={billingInfo.name}
-                  onChange={handleInputChange}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                 />
               </div>
@@ -68,8 +101,8 @@ function PaymentPage() {
                   type="text"
                   className="form-control"
                   name="address"
-                  value={billingInfo.address}
-                  onChange={handleInputChange}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   required
                 />
               </div>
@@ -81,8 +114,8 @@ function PaymentPage() {
                     type="text"
                     className="form-control"
                     name="city"
-                    value={billingInfo.city}
-                    onChange={handleInputChange}
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                     required
                   />
                 </div>
@@ -92,8 +125,8 @@ function PaymentPage() {
                     type="text"
                     className="form-control"
                     name="postalCode"
-                    value={billingInfo.postalCode}
-                    onChange={handleInputChange}
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
                     required
                   />
                 </div>
@@ -105,8 +138,8 @@ function PaymentPage() {
                   type="text"
                   className="form-control"
                   name="country"
-                  value={billingInfo.country}
-                  onChange={handleInputChange}
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                   required
                 />
               </div>
@@ -139,7 +172,7 @@ function PaymentPage() {
         </div>
 
         {/* Right Section - Order Summary */}
-        <div className="col-lg-6">
+        {/* <div className="col-lg-6">
           <div className="border p-4 rounded shadow-sm">
             <h5 className="mb-3">Order Summary</h5>
             {products.map((product, i) => (
@@ -162,10 +195,10 @@ function PaymentPage() {
               <FontAwesomeIcon icon={["fas", "cart-arrow-down"]} /> Back to Cart
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
 }
 
-export default PaymentPage;
+// export default PaymentPage;

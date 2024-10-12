@@ -58,7 +58,6 @@ export default function SignUpSide() {
       console.log("role:"+ role);
       console.log("fullname:"+ fullname);
 
-
       console.error("Registration error:", error);
       alert("An error occurred during registration.");
     }
