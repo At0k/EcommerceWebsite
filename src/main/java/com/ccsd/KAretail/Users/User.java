@@ -3,14 +3,6 @@ package com.ccsd.KAretail.Users;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.springframework.http.ResponseEntity;
-
-import com.ccsd.KAretail.Users.Users;
-
-@Document(collection = "customer")
-
-public class Customer extends Users{
-
 @Document(collection = "user")
 public class User {
     

@@ -20,7 +20,7 @@ function App() {
   const [theme, colorMode] = useMode();
 
   return (
-    <>
+    <><>
       <Routes>
         <Route path="/sign-in" element={<SignInSide />} />
         <Route path="/sign-up" element={<SignUpSide />} />
@@ -28,7 +28,7 @@ function App() {
         <Route path="/products/:slug" element={<ProductDetail />} />
         <Route path="/dashboard-admin" element={<AdminPages />} />
         <Route path="/dashboard-staff" element={<StaffPages />} />
-        
+
         {/* New Payment and Success routes */}
         <Route path="/payment" element={<PaymentPage />} />   {/* Payment Page Route */}
         <Route path="/success" element={<SuccessPage />} />   {/* Success Page Route */}
@@ -38,25 +38,23 @@ function App() {
       </Routes>
       <AdminPages />
       <StaffPages />
-    </>
-
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline /> {/* Reset default browser styles */}
-        <Header title="My Store" />
-        <Routes>
-          {/* Set Landing.js as the default route */}
-          <Route path="/" element={<Landing />} /> 
-          <Route path="/sign-in" element={<SignInSide />} />
-          <Route path="/sign-up" element={<SignUpSide />} />
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/products/:slug" element={<ProductDetail />} />
-          <Route path="/dashboard-admin" element={<AdminPages />} />
-          <Route path="/dashboard-staff" element={<StaffPages />} />
-          <Route path="/cart" element={<Cart />} /> {/* Cart page route */}
-        </Routes>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    </><ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline /> {/* Reset default browser styles */}
+          <Header title="My Store" />
+          <Routes>
+            {/* Set Landing.js as the default route */}
+            <Route path="/Landing" element={<Landing />} />
+            <Route path="/sign-in" element={<SignInSide />} />
+            <Route path="/sign-up" element={<SignUpSide />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/dashboard-admin" element={<AdminPages />} />
+            <Route path="/dashboard-staff" element={<StaffPages />} />
+            <Route path="/cart" element={<Cart />} /> {/* Cart page route */}
+          </Routes>
+        </ThemeProvider>
+      </ColorModeContext.Provider></>
   );
 }
 
