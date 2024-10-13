@@ -79,8 +79,4 @@ public class User {
         return role;
     }
 
-    public Object findByEmail(String email2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByEmail'");
-    }
 }

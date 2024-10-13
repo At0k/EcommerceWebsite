@@ -1,153 +1,225 @@
+/* styles.css */
+
+/* Base Styles */
+body {
+  background-color: white !important; /* Set background color to white */
+  color: black !important; /* Set default text color to black */
+  font-family: Arial, sans-serif; /* General font */
+}
+
+/* Header Styles */
+header {
+  background-color: white; /* White background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+header h6 {
+  color: black; /* Black font color */
+}
+
+/* Button Styles */
+.btn {
+  background-color: #1A3E28; /* Dark Green */
+  color: white;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #FBCB3A; /* Soft Yellow */
+}
+
+/* Card Styles */
+.card {
+  background-color: #2A2A2A; /* Dark Card Background */
+  border: 1px solid #444; /* Dark border for cards */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+  color: #FBCB3A; /* Keep titles in Soft Yellow for contrast */
+}
+
+/* Editor Styles */
 .editor-text-bold {
-    font-weight: bold;
-  }
-  
-  .editor-text-italic {
-    font-style: italic;
-  }
-  
-  .editor-text-strikethrough {
-    text-decoration: line-through;
-  }
-  
-  .editor-text-underline {
-    text-decoration: underline;
-  }
-  
-  .editor-text-underlineStrikethrough {
-    text-decoration: underline line-through;
-  }
-  
-  .editor-quote {
-    margin: 0;
-    margin-left: 20px;
-    font-size: 15px;
-    color: rgb(101, 103, 107);
-    border-left-color: rgb(206, 208, 212);
-    border-left-width: 4px;
-    border-left-style: solid;
-    padding-left: 16px;
-  }
-  
-  .editor-list-ol {
-    padding: 0;
-    margin: 0;
-    margin-left: 16px;
-  }
-  
-  .editor-list-ul {
-    padding: 0;
-    margin: 0;
-    margin-left: 16px;
-  }
-  
-  .editor-listitem {
-    margin: 8px 32px 8px 32px;
-  }
-  
-  .editor-nested-listitem {
-    list-style-type: none;
-  }
-  
-  .editor-code {
-    background-color: rgb(240, 242, 245);
-    font-family: Menlo, Consolas, Monaco, monospace;
-    display: block;
-    padding: 8px 8px 8px 52px;
-    line-height: 1.53;
-    font-size: 13px;
-    margin: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    tab-size: 2;
-    /* white-space: pre; */
-    overflow-x: auto;
-    position: relative;
-  }
-  
-  .editor-text-code {
-    background-color: #f0f2f5;
-    padding: 1px 0.25rem;
-    font-family: Menlo, Consolas, Monaco, monospace;
-    font-size: 94%;
-  }
-  
-  .editor-code:before {
-    content: attr(data-gutter);
-    position: absolute;
-    background-color: #eee;
-    left: 0;
-    top: 0;
-    border-right: 1px solid #ccc;
-    padding: 8px;
-    color: #777;
-    white-space: pre-wrap;
-    text-align: right;
-    min-width: 25px;
-  }
-  
-  .other ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-  }
-  
-  .link-editor .link-input {
-    display: block;
-    width: calc(100% - 24px);
-    box-sizing: border-box;
-    margin: 8px 12px;
-    padding: 8px 12px;
-    border-radius: 15px;
-    background-color: #eee;
-    font-size: 15px;
-    color: rgb(5, 5, 5);
-    border: 0;
-    outline: 0;
-    position: relative;
-    font-family: inherit;
-  }
-  
-  .link-editor div.link-edit {
-    background-size: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 35px;
-    vertical-align: -0.25em;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    cursor: pointer;
-  }
-  
-  .link-editor .link-input a {
-    color: rgb(33, 111, 219);
-    text-decoration: none;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    margin-right: 30px;
-    text-overflow: ellipsis;
-  }
-  
-  .link-editor .link-input a:hover {
-    text-decoration: underline;
-  }
-  
-  .link-editor .button {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    padding: 6px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin: 0 2px;
-  }
-  
-  .link-editor .button.hovered {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    background-color: #eee;
-  }
+  font-weight: bold;
+}
+
+.editor-text-italic {
+  font-style: italic;
+}
+
+.editor-text-strikethrough {
+  text-decoration: line-through;
+}
+
+.editor-text-underline {
+  text-decoration: underline;
+}
+
+.editor-text-underlineStrikethrough {
+  text-decoration: underline line-through;
+}
+
+.editor-quote {
+  margin: 0;
+  margin-left: 20px;
+  font-size: 15px;
+  color: rgb(101, 103, 107);
+  border-left-color: rgb(206, 208, 212);
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 16px;
+}
+
+.editor-list-ol,
+.editor-list-ul {
+  padding: 0;
+  margin: 0;
+  margin-left: 16px;
+}
+
+.editor-listitem {
+  margin: 8px 32px;
+}
+
+.editor-nested-listitem {
+  list-style-type: none;
+}
+
+.editor-code {
+  background-color: rgb(240, 242, 245);
+  font-family: Menlo, Consolas, Monaco, monospace;
+  display: block;
+  padding: 8px 8px 8px 52px;
+  line-height: 1.53;
+  font-size: 13px;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  tab-size: 2;
+  overflow-x: auto;
+  position: relative;
+}
+
+.editor-text-code {
+  background-color: #f0f2f5;
+  padding: 1px 0.25rem;
+  font-family: Menlo, Consolas, Monaco, monospace;
+  font-size: 94%;
+}
+
+.editor-code:before {
+  content: attr(data-gutter);
+  position: absolute;
+  background-color: #eee;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #ccc;
+  padding: 8px;
+  color: #777;
+  white-space: pre-wrap;
+  text-align: right;
+  min-width: 25px;
+}
+
+.other ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+/* Link Editor Styles */
+.link-editor .link-input {
+  display: block;
+  width: calc(100% - 24px);
+  box-sizing: border-box;
+  margin: 8px 12px;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background-color: #eee; /* Light background */
+  font-size: 15px;
+  color: rgb(5, 5, 5);
+  border: 0;
+  outline: 0;
+  position: relative;
+}
+
+.link-editor div.link-edit {
+  background-size: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 35px;
+  vertical-align: -0.25em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.link-editor .link-input a {
+  color: rgb(33, 111, 219); /* Accent color */
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 30px;
+  text-overflow: ellipsis;
+}
+
+.link-editor .link-input a:hover {
+  text-decoration: underline;
+}
+
+.link-editor .button {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.link-editor .button.hovered {
+  background-color: #eee;
+}
+
+/* Add additional styles as needed */
+
+.card {
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  transition: transform 0.2s; /* Smooth hover effect */
+}
+
+.card:hover {
+  transform: scale(1.02); /* Scale up on hover */
+}
+
+.card-title {
+  font-weight: bold; /* Bold title */
+}
+
+.card-text {
+  font-size: 1rem; /* Adjust font size */
+}
+
+
+footer {
+  background-color: #343a40; /* Dark background */
+  color: white;
+  padding: 20px 0;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

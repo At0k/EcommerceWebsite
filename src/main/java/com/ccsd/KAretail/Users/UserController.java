@@ -51,6 +51,7 @@ public class UserController {
         String password = loginRequest.getPassword();
         User user = userService.findByEmail(email);
         if (userService.findByEmail(user.getEmail()) != null) {
+
             if (password.equals(user.getPassword()) && user != null) {
                 // Store user info in session
                 session.setAttribute("email", user.getEmail());
