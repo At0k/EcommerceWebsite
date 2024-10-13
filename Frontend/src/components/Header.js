@@ -7,14 +7,13 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { ColorModeContext } from "../base/theme";
-import { Brightness4, Brightness7, ShoppingCart } from "@mui/icons-material"; // Import ShoppingCart icon
-import { useTheme } from "@mui/material/styles";
+import { ShoppingCart } from "@mui/icons-material"; // Import ShoppingCart icon
 import { Link } from "react-router-dom"; // For routing to cart page
+import { CartContext } from "../cart/CartContext"; // Adjust the import path
 
 const Header = ({ title }) => {
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
+  const { cartItems } = useContext(CartContext); // Access cart items
+  const distinctProductCount = cartItems.length; // Count distinct products in the cart
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "white", boxShadow: 3 }}>
@@ -22,11 +21,9 @@ const Header = ({ title }) => {
         <Box display="flex" flexGrow={1} alignItems="center">
           <Link to="/" style={{ textDecoration: 'none' }}>
             <Typography variant="h6" color="black" component="div" sx={{ mr: 2 }}>
-              My Store
+              {title}
             </Typography>
           </Link>
-
-          {/* Products Button */}
           <Link to="/products">
             <Button color="inherit" sx={{ color: "black", ml: 2 }}>
               Products
@@ -35,26 +32,28 @@ const Header = ({ title }) => {
         </Box>
 
         <Box display="flex" alignItems="center">
-          {/* Cart Icon */}
           <Link to="/cart">
             <IconButton sx={{ color: "black" }}>
               <ShoppingCart />
+              {distinctProductCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  background: 'red',
+                  borderRadius: '50%',
+                  padding: '4px 8px',
+                  color: 'white',
+                  fontSize: '12px',
+                }}>
+                  {distinctProductCount}
+                </span>
+              )}
             </IconButton>
           </Link>
-
-          {/* Profile Button */}
           <Button color="inherit" sx={{ color: "black", ml: 2 }}>
             Profile
           </Button>
-
-          {/* Theme Toggle Button */}
-          <IconButton onClick={colorMode.toggleColorMode} color="inherit" sx={{ ml: 2 }}>
-            {theme.palette.mode === "dark" ? (
-              <Brightness7 sx={{ color: "black" }} />
-            ) : (
-              <Brightness4 sx={{ color: "black" }} />
-            )}
-          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>

@@ -2,8 +2,8 @@
 
 /* Base Styles */
 body {
-  background-color: #1F1F1F; /* Dark Background */
-  color: #FFFFFF; /* White text for dark mode */
+  background-color: white !important; /* Set background color to white */
+  color: black !important; /* Set default text color to black */
   font-family: Arial, sans-serif; /* General font */
 }
 
