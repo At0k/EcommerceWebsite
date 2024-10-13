@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ccsd.KAretail.Product.Product;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -40,10 +39,8 @@ public class UserController {
         //     return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email already exists");
         // } else {
         
-
         return userService.addUser(user);
         // }
-        
         // Save the new user (password in plain text)
 
     }
@@ -54,18 +51,44 @@ public class UserController {
         String password = loginRequest.getPassword();
         User user = userService.findByEmail(email);
         if (userService.findByEmail(user.getEmail()) != null) {
-            // Validate password (without encryption)
-            if (password.equals(user.getPassword())) {
+            if (password.equals(user.getPassword()) && user != null) {
                 // Store user info in session
-                session.setAttribute("userId", user.getId());
+                session.setAttribute("email", user.getEmail());
                 session.setAttribute("role", user.getRole());
+                String role = user.getRole();
 
-                return ResponseEntity.ok("Login successful");
+                return ResponseEntity.ok(role);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
             }
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Map<String, Object>> getProfile(HttpSession session) {
+        // Retrieve the email and role from the session
+        String email = (String) session.getAttribute("email");
+        // String role = (String) session.getAttribute("role");
+
+        // Check if the user is logged in by verifying the email
+        if (email != null) {
+            // Fetch the user details using the email
+            User user = userService.findByEmail(email);
+
+            if (user != null) {
+                // Prepare a map to include both user details and role
+                Map<String, Object> response = Map.of(
+                    "user", user,
+                    "role", session.getAttribute("role")
+                );
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthorized access"));
         }
     }
 
@@ -83,6 +106,15 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    // @PutMapping("/email/{email}")
+    // public ResponseEntity<User> updateUserByEmail(@PathVariable String email, @RequestBody User userDetails) {
+    //    // User updatedUser = userService.updateUserByEmail(email, userDetails);
+    //     if (updatedUser != null) {
+    //         return ResponseEntity.ok(updatedUser);
+    //     }
+    //     return ResponseEntity.notFound().build();
+    // }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
@@ -148,5 +180,3 @@ public class UserController {
     }
 
 }
-
-
