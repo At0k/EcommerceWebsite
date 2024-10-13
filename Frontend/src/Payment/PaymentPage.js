@@ -3,6 +3,20 @@ import { Link } from "react-router-dom";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+function PaymentPage() {
+  const [billingInfo, setBillingInfo] = useState({
+    name: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    country: "Malaysia", // Set default country
+    paymentMethod: "creditCard",
+  });
+
+  const [products] = useState([
+    { id: 1, name: "Nillkin iPhone X cover", price: 100.00, quantity: 1 },
+    { id: 2, name: "Remax USB Cable", price: 50.00, quantity: 2 },
+  ]);
 import AuthService from '../Auth/AuthService'; 
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
@@ -134,14 +148,19 @@ export default function PaymentPage() {
 
               <div className="mb-3">
                 <label className="form-label">Country</label>
-                <input
-                  type="text"
-                  className="form-control"
+                <select
+                  className="form-select"
                   name="country"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   required
-                />
+                >
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="Thailand">Thailand</option>
+                  <option value="Brunei">Brunei</option>
+                  <option value="Indonesia">Indonesia</option>
+                </select>
               </div>
 
               <div className="mb-3">
@@ -180,7 +199,7 @@ export default function PaymentPage() {
                 <span>
                   {product.name} x {product.quantity}
                 </span>
-                <span>{product.price * product.quantity} Ks</span>
+                <span>RM {product.price * product.quantity}</span>
               </div>
             ))}
 
@@ -188,7 +207,7 @@ export default function PaymentPage() {
 
             <div className="d-flex justify-content-between mb-3">
               <span>Total Price:</span>
-              <strong>{totalPrice} Ks</strong>
+              <strong>RM {totalPrice.toFixed(2)}</strong>
             </div>
 
             <Link to="/products" className="btn btn-outline-dark w-100 mb-2">

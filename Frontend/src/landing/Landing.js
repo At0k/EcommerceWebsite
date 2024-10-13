@@ -3,42 +3,42 @@ import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import sambalNyetImage from "../images/sambal-nyet-berapi.jpg";
-// import dendengNyetImage from "../images/dendeng-nyet-berapi.jpg";
-// import pauImage from "../images/pau.jpg";
-// import aglioOlioImage from "../images/aglio-olio.jpg";
-// import stimbotPasteImage from "../images/stimbot-paste.jpg";
+import dendengNyetImage from "../images/dendeng-nyet-berapi.jpg";
+import pauImage from "../images/pau.jpeg";
+import aglioOlioImage from "../images/aglio-olio.jpeg";
+import stimbotPasteImage from "../images/stimbot-paste.jpeg";
 
 function Landing() {
   const products = [
     { 
       name: "Sambal Nyet Berapi", 
-      price: "RM14.00", 
+      //price: "RM14.00", 
       description: "A fiery, delicious sambal made with fresh chili, garlic, and secret spices. Perfect for spicing up any meal.", 
       image: sambalNyetImage
     },
     { 
       name: "Dendeng Nyet Berapi", 
-      price: "RM25.00", 
+      //price: "RM25.00", 
       description: "Crispy and flavorful beef jerky marinated with sambal and spices for that perfect snack or side dish.", 
-      // image: dendengNyetImage
+      image: dendengNyetImage
     },
     { 
       name: "Pau", 
-      price: "RM10.00", 
+      //price: "RM10.00", 
       description: "Soft, fluffy steamed buns filled with various flavors like kaya, red bean, and meat fillings.", 
-      // image: pauImage
+      image: pauImage
     },
     { 
       name: "Aglio Olio", 
-      price: "RM18.00", 
+      //price: "RM18.00", 
       description: "A fusion pasta dish cooked with olive oil, garlic, chili flakes, and a Malaysian twist of spices.", 
-      // image: aglioOlioImage
+      image: aglioOlioImage
     },
     { 
       name: "Stimbot Paste", 
-      price: "RM12.00", 
+      //price: "RM12.00", 
       description: "A savory paste for steamboat, packed with flavor to enhance your hotpot experience.", 
-      // image: stimbotPasteImage
+      image: stimbotPasteImage
     },
   ];
 
@@ -78,7 +78,6 @@ function Landing() {
                 <div className="card-body">
                   <h5 className="card-title" style={{ color: "black" }}>{product.name}</h5>
                   <p className="card-text" style={{ color: "black" }}>{product.description}</p>
-                  <p className="card-text" style={{ color: "black" }}><strong>Price: {product.price}</strong></p>
                 </div>
               </div>
             </div>
