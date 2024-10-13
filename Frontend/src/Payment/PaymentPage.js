@@ -7,33 +7,6 @@ import AuthService from '../Auth/AuthService';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 export default function PaymentPage() {
-  // const [billingInfo, setBillingInfo] = useState({
-  //   name: "",
-  //   address: "",
-  //   city: "",
-  //   postalCode: "",
-  //   country: "",
-  //   paymentMethod: "creditCard",
-  // });
-
-  // const [products] = useState([
-  //   { id: 1, name: "Nillkin iPhone X cover", price: 10000, quantity: 1 },
-  //   { id: 2, name: "Remax USB Cable", price: 5000, quantity: 2 },
-  // ]);
-
-  
-
-  // const totalPrice = products.reduce(
-  //   (acc, product) => acc + product.price * product.quantity,
-  //   0
-  // );
-
-  // const handlePaymentSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Simulate payment process
-  //   console.log("Payment details:", billingInfo);
-  //   setPaymentSuccess(true);
-  // };
 
   //-----------------------------------------
   const [name, setName] = useState("");

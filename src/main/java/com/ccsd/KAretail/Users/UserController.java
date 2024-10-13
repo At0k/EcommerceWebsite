@@ -140,12 +140,6 @@ public class UserController {
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         }
-    
-        // return switch (role) {
-        //     case 1 -> ResponseEntity.ok("Welcome Customer");
-        //     case 2 -> ResponseEntity.ok("Welcome Staff");
-        //     default -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        // };
     }
     
 

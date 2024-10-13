@@ -92,7 +92,7 @@ const Profile = () => {
     }
   };
 
-  const handleBack = () => navigate("/Landing");
+  const handleBack = () => navigate("/");
 
   // Handle loading state
   if (loading) {
