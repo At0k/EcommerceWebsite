@@ -1,4 +1,3 @@
-// ProductList.js
 import { Link } from "react-router-dom";
 import Product from "./Product"; 
 import { useState } from "react";
@@ -40,7 +39,7 @@ function ProductList() {
           <div className="d-flex flex-column h-100">
             <div className="row mb-3">
               <div className="col-lg-12 d-flex flex-row">
-                <div className="input-group">
+                {/* <div className="input-group">
                   <input className="form-control" type="text" placeholder="Search products..." aria-label="search input" />
                   <button className="btn btn-outline-dark">
                     <FontAwesomeIcon icon={["fas", "search"]} />
@@ -48,7 +47,7 @@ function ProductList() {
                 </div>
                 <button className="btn btn-outline-dark ms-2" onClick={changeViewType}>
                   <FontAwesomeIcon icon={["fas", viewType.grid ? "th-list" : "th-large"]} />
-                </button>
+                </button> */}
               </div>
             </div>
             <div className={`row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0 ${viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2"}`}>

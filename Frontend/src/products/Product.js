@@ -1,9 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { CartContext } from '../cart/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from '../sambal-nyet-berapi.jpg'; // Use your actual product images
+import Image from '../sambal-nyet-berapi.jpg'; // Use your actual product image path
 
 function Product({ name, price, percentOff }) {
+  const { addToCart } = useContext(CartContext);
+
   let offPrice = `${price}`;
   let discountBadge = null;
 
@@ -24,32 +26,31 @@ function Product({ name, price, percentOff }) {
     );
   }
 
+  const handleAddToCart = () => {
+    const numericPrice = parseFloat(price.replace("RM", "")); // Convert the price to a number
+    addToCart({ id: name, name, price: numericPrice, image: Image }); // Ensure to pass a unique id
+  };
+
   return (
     <div className="col">
-      <div className="card shadow-sm" style={{ height: '100%' }}> {/* Ensures card takes full height */}
-        <Link to="/products/1" replace>
-          {discountBadge}
-          <img 
-            className="card-img-top bg-dark cover" 
-            height="200" 
-            alt="" 
-            src={Image} 
-            style={{ 
-              objectFit: 'cover', // Maintain aspect ratio without stretching
-              width: '100%', // Full width
-              height: '200px' // Fixed height
-            }} 
-          />
-        </Link>
+      <div className="card shadow-sm" style={{ height: '100%' }}>
+        {discountBadge}
+        <img
+          className="card-img-top bg-dark cover"
+          height="200"
+          alt=""
+          src={Image}
+          style={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '200px'
+          }}
+        />
         <div className="card-body">
           <h5 className="card-title text-center text-dark text-truncate">{name}</h5>
-
-          <h5 className="card-title text-center text-dark text-truncate">
-            Sambal Nyet Ikmal
-          </h5>
           <p className="card-text text-center text-muted mb-0">{offPrice}</p>
           <div className="d-grid d-block">
-            <button className="btn btn-outline-dark mt-3">
+            <button className="btn btn-outline-dark mt-3" onClick={handleAddToCart}>
               <FontAwesomeIcon icon={['fas', 'cart-plus']} /> Add to cart
             </button>
           </div>
