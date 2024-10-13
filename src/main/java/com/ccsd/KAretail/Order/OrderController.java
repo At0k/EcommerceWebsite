@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import com.ccsd.KAretail.Product.Product;
+
+
 @RestController
 @RequestMapping("/api/Order")
 public class OrderController {
@@ -43,4 +46,11 @@ public class OrderController {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<Order> checkout(@RequestBody List<Product> productList) {
+        Order newOrder = orderService.checkout(productList);
+        return ResponseEntity.ok(newOrder);
+    }
+
 }
