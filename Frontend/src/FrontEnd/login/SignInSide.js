@@ -51,7 +51,7 @@ export default function SignInSide() {
         
         // Check the userType and redirect accordingly
         if (userType === "Customer") {
-          navigate("/dashboard-customer");  // Correct this path if necessary
+          navigate("/Landing");  // Correct this path if necessary
         } else if (userType === "Staff") {
           navigate("/dashboard-staff");  // Correct this path if necessary
         } else {

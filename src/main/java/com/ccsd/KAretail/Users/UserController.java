@@ -42,7 +42,6 @@ public class UserController {
 
         return userService.addUser(user);
         // }
-        
         // Save the new user (password in plain text)
 
     }
@@ -59,7 +58,6 @@ public class UserController {
                 session.setAttribute("userId", user.getId());
                 session.setAttribute("role", user.getRole());
                 String role = user.getRole();
-
 
                 return ResponseEntity.ok(role);
             } else {
