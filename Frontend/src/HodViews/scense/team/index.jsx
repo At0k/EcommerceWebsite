@@ -1,134 +1,213 @@
-import { Box, Typography, useTheme, Button, Grid } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
-import { tokens } from "../../../base/theme";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { Box, Typography, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import Header from "../../../components/Header";
 import React, { useState, useEffect } from "react";
-import GetItemsAdmin from "../../getItemAdmin";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AuthService from '../../../Auth/AuthService';
 
+interface User {
+    id: string; // or number
+    username: string;
+    fullname: string;
+    email: string; 
+    phoneNo: string;
+    role: string;
+  }
 const TeamAdmin = () => {
-    const [teamDeatails, setTeamDetails] = useState([]);
-
-
-    useEffect(() => {
-        GetItemsAdmin.getTeamDataAdmin()
-            .then((result) => {
-                // Assuming result.data is the array you want
-                const teamData = result.data || [];
-                setTeamDetails(teamData);
-            })
-            .catch((error) => {
-                console.error("Error fetching team data:", error);
-            });
-    }, []);
-    
-    
-
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    
-
-
-    const columns = [
-        { field: "id", headerName: "ID" },
-        { field: "name", headerName: "NAME", flex: 1, cellClassName: "name-column--cell" },
-        { field: "phone", headerName: "PHONE#", flex: 1 },
-        { field: "email", headerName: "EMAIL", flex: 1 },
-        {
-            field: "access",
-            headerName: "ACCESS",
-            flex: 1,
-            renderCell: ({ row: { access } }) => {
-                return (
-                    <Box
-                        width="60%"
-                        m="0 auto"
-                        p="5px"
-                        justifyContent="center"
-                        alignItems="center" // Added for vertical alignment
-                        backgroundColor={
-                            access === "admin"
-                                ? colors.greenAccent[600]
-                                : colors.greenAccent[700]
-                        }
-                        borderRadius="4px"
-                    >
-                        {access === "Teacher" && <AdminPanelSettingsOutlinedIcon />}
-                        {access === "manager" && <SecurityOutlinedIcon />}
-                        {access === "user" && <LockOpenOutlinedIcon />}
-                        <Typography variant="body1" color={colors.grey[100]} sx={{ ml: "5px" }}>
-                            {access}
-                        </Typography>
-                    </Box>
-                );
-            },
-        },
-        {
-            field: "edit",
-            headerName: "EDIT",
-            flex: 1,
-            renderCell: ({ row }) => {
-                return (
-                    <Link to={`/editTeam/${row.id}`} style={{ textDecoration: "none" }}>
-                        <Box
-                            width="40%"
-                            m="0 auto"
-                            p="5px"
-                            justifyContent="center"
-                            alignItems="center" // Added for vertical alignment
-                            backgroundColor={
-                                row.access === "admin"
-                                    ? colors.greenAccent[600]
-                                    : colors.greenAccent[700]
-                            }
-                            borderRadius="4px"
-                        >
-                            <EditOutlinedIcon />
+ 
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8082/api/Users'); // Fetch all users
+        console.log("Response status:", response.status);
         
-                            <Typography variant="body1" color={colors.grey[100]} sx={{ ml: "5px" }}>
-                                Edit
-                            </Typography>
-                        </Box>
-                    </Link>
-                );
-            },
-        },
-        
-    ];
-    
-      
+        if (response.status === 401) {
+          navigate('/sign-in');  // Redirect if not authenticated
+        } else if (response.ok) {
+          const data = await response.json(); // If response is OK, parse as JSON
+          console.log("Fetched users data:", data);
+          setUsers(data); // Store the fetched users data
+        } else {
+          const errorText = await response.text();
+          throw new Error(errorText); // Log the response text for non-200 statuses
+        }
+      } catch (error) {
+        console.error("Error fetching users data:", error);
+      }
+    };
 
-    return (
-        <Box>
-            <Header title="Team" subtitle="Managing the Team" />
-            <Box>
-                <DataGrid
-                    rows={teamDeatails}
-                    columns={columns}
-                    pageSize={12}
-                />
-            </Box>
-            <Link to="/AddTeam" style={{ textDecoration: 'none' }}>
-                <Grid container justifyContent="flex-end">
-                    <Box sx={{ m: 2, }}>
-                        <Button 
-                            startIcon={<PersonAddAltOutlinedIcon />}
-                            justifyContent="center"
-                            variant="contained"
-                            size="large"
-                            color = "success"
-                            >Add Team Member
-                        </Button>
-                    </Box>
-                </Grid>
-            </Link>
-        </Box>
-    );
+    fetchData();
+  }, [navigate]);
+
+  return (
+    <Box m="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="Team" subtitle="Anjing the Team" />
+      </Box>
+
+      <Box mt={4}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Fullname</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone No</TableCell>
+                <TableCell>Role</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow key={user.id}> {/* Correct key for rows */}
+                  <TableCell>{user.id}</TableCell>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.fullname}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.phoneNo}</TableCell>
+                  <TableCell>{user.role}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+
+      <Link to="/AddTeam" style={{ textDecoration: 'none' }}>
+        <Grid container justifyContent="flex-end">
+          <Box sx={{ m: 2 }}>
+            <Button
+              startIcon={<PersonAddAltOutlinedIcon />}
+              justifyContent="center"
+              variant="contained"
+              size="large"
+              color="success"
+            >
+              Add Team Member
+            </Button>
+          </Box>
+        </Grid>
+      </Link>
+    </Box>
+  );
 };
 
 export default TeamAdmin;
+
+
+
+
+
+function setUsers(data) {
+    throw new Error("Function not implemented.");
+}
+// import { Box, Typography, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+// import { Link, Navigate } from "react-router-dom";
+// import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
+// import Header from "../../../components/Header";
+// import React, { useState, useEffect } from "react";
+// import AuthService from '../../../Auth/AuthService';
+// import { useNavigate } from "react-router-dom";
+
+// const TeamAdmin = () => {
+//   const [users, setUsers] = useState([]);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     //const fetchData = async () => {
+//     //   try {
+//     //     const data = await AuthService.fetchTeamDetail(); // Call method correctly
+//     //     setUsers(data); // Store fetched data
+//     //   } catch (error) {
+//     //     console.error('Failed to fetch team details:', error);
+//     //   }
+//     // };
+
+//     // fetchData();
+//     fetch('http://localhost:8082/api/Users/{id}', {
+//         method: 'GET',
+//       })
+//       .then((res) => {
+//           console.log("Response status:", res.status);
+          
+//           if (res.status === 401) {
+//             navigate('/sign-in');  // Redirect if not authenticated
+//             return null;
+//           } else if (res.ok) {
+//             return res.json(); // If response is OK, parse as JSON
+//           } else {
+//             return res.text().then(text => { throw new Error(text); }); // Log the response text for non-200 statuses
+//           }
+//       })
+//       .then((data) => {
+//           if (data) {
+//             console.log("Fetched profile data:", data);
+//             setProfile(data.user);  // Store the user profile
+//           }
+//           setLoading(false);  // Turn off loading after data is fetched
+//       })
+//       .catch((error) => {
+//           console.error("Error fetching profile data:", error);
+//           setError(error.message || "Unknown error occurred");
+//           setLoading(false);  // Turn off loading even if there's an error
+//       });
+//   }, [navigate] );
+
+//   return (
+//     <Box m="20px">
+//       <Box display="flex" justifyContent="space-between" alignItems="center">
+//         <Header title="Team" subtitle="Managing the Team" />
+//       </Box>
+
+//       <Box mt={4}>
+//         <TableContainer component={Paper}>
+//           <Table>
+//             <TableHead>
+//               <TableRow>
+//                 <TableCell>ID</TableCell>
+//                 <TableCell>Username</TableCell>
+//                 <TableCell>Fullname</TableCell>
+//                 <TableCell>Email</TableCell>
+//                 <TableCell>Phone No</TableCell>
+//                 <TableCell>Role</TableCell>
+//               </TableRow>
+//             </TableHead>
+//             <TableBody>
+//               {users.map((user) => (
+//                 <TableRow key={user.id}> {/* Correct key for rows */}
+//                   <TableCell>{user.id}</TableCell>
+//                   <TableCell>{user.username}</TableCell>
+//                   <TableCell>{user.fullname}</TableCell>
+//                   <TableCell>{user.email}</TableCell>
+//                   <TableCell>{user.phoneNo}</TableCell>
+//                   <TableCell>{user.role}</TableCell>
+//                 </TableRow>
+//               ))}
+//             </TableBody>
+//           </Table>
+//         </TableContainer>
+//       </Box>
+
+//       <Link to="/AddTeam" style={{ textDecoration: 'none' }}>
+//         <Grid container justifyContent="flex-end">
+//           <Box sx={{ m: 2 }}>
+//             <Button
+//               startIcon={<PersonAddAltOutlinedIcon />}
+//               justifyContent="center"
+//               variant="contained"
+//               size="large"
+//               color="success"
+//             >
+//               Add Team Member
+//             </Button>
+//           </Box>
+//         </Grid>
+//       </Link>
+//     </Box>
+//   );
+// };
+
+// export default TeamAdmin;
