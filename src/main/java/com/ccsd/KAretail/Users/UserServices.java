@@ -48,6 +48,21 @@ public class UserServices {
         }
         return null;
     }
+
+    public User updateUserByEmail(String email, User userDetails) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            // Update the fields
+            user.setFullname(userDetails.getFullname());
+            user.setUsername(userDetails.getUsername());
+            user.setEmail(userDetails.getEmail());
+            user.setPhoneNo(userDetails.getPhoneNo());
+            
+            // Save updated user to the database
+            return userRepository.save(user);
+        }
+        return null;  // User not found
+    }
     
     public void deleteUser(String id) {
         userRepository.deleteById(id);

@@ -104,6 +104,29 @@ const AuthService = {
           throw error;
         }
       },
+      
+      async fetchUsers() {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/Users`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (response.status === 200) {
+                return response.data;
+            }
+          } catch (error) {
+              if (error.response) {
+                  console.error('Server responded with an error:', error.response.data);
+              } else if (error.request) {
+                  console.error('No response received:', error.request);
+              } else {
+                  console.error('Error setting up the request:', error.message);
+              }
+              throw error;
+          }
+      },
 };
 
 export default AuthService;

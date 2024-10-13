@@ -55,6 +55,15 @@
 		<artifactId>reactor-test</artifactId>
 		<scope>test</scope>
     </dependency>
+	<dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-core</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-data-redis</artifactId> <!-- Optional if using Redis for session store -->
+</dependency>
 	<!-- <dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-devtools</artifactId>
