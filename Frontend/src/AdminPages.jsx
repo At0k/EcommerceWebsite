@@ -11,9 +11,6 @@ import EditTeam from "./HodViews/scense/team/editTeam";
 import Services from "./HodViews/scense/services";
 
 
-
-
-
 const HodViewsLayout = ({ children }) => {
     const [theme, colorMode] = useMode();
   

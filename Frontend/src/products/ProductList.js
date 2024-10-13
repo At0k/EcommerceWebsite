@@ -1,10 +1,8 @@
+
 import { Link } from "react-router-dom";
 import Product from "./Product"; 
-// import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import React, { useState, useEffect } from 'react';
-
 
 function ProductList() {
   const [viewType, setViewType] = useState({ grid: true });
@@ -63,7 +61,6 @@ function ProductList() {
           <div className="d-flex flex-column h-100">
             <div className="row mb-3">
               <div className="col-lg-12 d-flex flex-row">
-                {/* Optional search and view toggle */}
                 <button onClick={changeViewType} className="btn btn-outline-dark">Toggle View</button>
               </div>
             </div>
@@ -71,31 +68,13 @@ function ProductList() {
             {/* Rendering fetched products */}
             <div className={`row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0 ${viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2"}`}>
               {products.map((product) => (
-                <Product key={product.id} name={product.productName} price={product.price} />
+                <Product 
+                  key={product.id} 
+                  name={product.productName} 
+                  price={product.price} 
+                  image={product.image} // Pass the image URL to Product component
+                />
               ))}
-            </div>
-
-            <div className="d-flex align-items-center mt-auto">
-              <span className="text-muted small d-none d-md-inline">Showing {products.length} of {products.length}</span>
-              <nav aria-label="Page navigation example" className="ms-auto">
-                <ul className="pagination my-0">
-                  <li className="page-item">
-                    <a className="page-link" href="!#">Previous</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">1</a>
-                  </li>
-                  <li className="page-item active">
-                    <a className="page-link" href="!#">2</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">3</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">Next</a>
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
@@ -105,3 +84,4 @@ function ProductList() {
 }
 
 export default ProductList;
+
