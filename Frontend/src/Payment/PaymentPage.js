@@ -9,13 +9,13 @@ function PaymentPage() {
     address: "",
     city: "",
     postalCode: "",
-    country: "",
+    country: "Malaysia", // Set default country
     paymentMethod: "creditCard",
   });
 
   const [products] = useState([
-    { id: 1, name: "Nillkin iPhone X cover", price: 10000, quantity: 1 },
-    { id: 2, name: "Remax USB Cable", price: 5000, quantity: 2 },
+    { id: 1, name: "Nillkin iPhone X cover", price: 100.00, quantity: 1 },
+    { id: 2, name: "Remax USB Cable", price: 50.00, quantity: 2 },
   ]);
 
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -101,14 +101,19 @@ function PaymentPage() {
 
               <div className="mb-3">
                 <label className="form-label">Country</label>
-                <input
-                  type="text"
-                  className="form-control"
+                <select
+                  className="form-select"
                   name="country"
                   value={billingInfo.country}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="Thailand">Thailand</option>
+                  <option value="Brunei">Brunei</option>
+                  <option value="Indonesia">Indonesia</option>
+                </select>
               </div>
 
               <div className="mb-3">
@@ -147,7 +152,7 @@ function PaymentPage() {
                 <span>
                   {product.name} x {product.quantity}
                 </span>
-                <span>{product.price * product.quantity} Ks</span>
+                <span>RM {product.price * product.quantity}</span>
               </div>
             ))}
 
@@ -155,7 +160,7 @@ function PaymentPage() {
 
             <div className="d-flex justify-content-between mb-3">
               <span>Total Price:</span>
-              <strong>{totalPrice} Ks</strong>
+              <strong>RM {totalPrice.toFixed(2)}</strong>
             </div>
 
             <Link to="/products" className="btn btn-outline-dark w-100 mb-2">
