@@ -84,7 +84,6 @@ public class ProductController {
             // Closing the connection  
             fout.close(); 
             fileUploadStatus = "File Uploaded Successfully"; 
-              
         }  
         
         // Catch block to handle exceptions 
@@ -146,6 +145,5 @@ public class ProductController {
                 .contentType(MediaType.parseMediaType(contentType)) 
                 .header(HttpHeaders.CONTENT_DISPOSITION, headerValue) 
                 .body(resource);  
-          
     } 
 }

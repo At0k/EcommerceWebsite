@@ -71,23 +71,6 @@ function App() {
             <Route path="/" element={<Landing />} />
 
     <><>
-      <Routes>
-        <Route path="/sign-in" element={<SignInSide />} />
-        <Route path="/sign-up" element={<SignUpSide />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/products/:slug" element={<ProductDetail />} />
-        <Route path="/dashboard-admin" element={<AdminPages />} />
-        <Route path="/dashboard-staff" element={<StaffPages />} />
-
-        {/* New Payment and Success routes */}
-        <Route path="/payment" element={<PaymentPage />} />   {/* Payment Page Route */}
-        <Route path="/success" element={<SuccessPage />} />   {/* Success Page Route */}
-
-        {/* New Profile route */}
-        <Route path="/profile" element={<Profile />} />       {/* User Profile Page */}
-      </Routes>
-      <AdminPages />
-      <StaffPages />
     </><ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline /> {/* Reset default browser styles */}
@@ -111,6 +94,13 @@ function App() {
     </>
 
             <Route path="/cart" element={<Cart />} /> {/* Cart page route */}
+            
+            {/* New Payment and Success routes */}
+            <Route path="/payment" element={<PaymentPage />} />   {/* Payment Page Route */}
+            <Route path="/success" element={<SuccessPage />} />   {/* Success Page Route */}
+
+            {/* New Profile route */}
+            <Route path="/profile" element={<Profile />} />       {/* User Profile Page */}
           </Routes>
         </ThemeProvider>
       </ColorModeContext.Provider></>

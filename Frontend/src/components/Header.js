@@ -19,7 +19,7 @@ const Header = ({ title }) => {
     <AppBar position="static" sx={{ backgroundColor: "white", boxShadow: 3 }}>
       <Toolbar>
         <Box display="flex" flexGrow={1} alignItems="center">
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/Landing" style={{ textDecoration: 'none' }}>
             <Typography variant="h6" color="black" component="div" sx={{ mr: 2 }}>
               {title}
             </Typography>
@@ -51,6 +51,21 @@ const Header = ({ title }) => {
               )}
             </IconButton>
           </Link>
+          {/* Profile Button */}
+          <Link to="/profile">
+            <Button color="inherit" sx={{ color: "black", ml: 2 }}>
+              Profile
+            </Button>
+          </Link>
+
+          {/* Theme Toggle Button */}
+          <IconButton onClick={colorMode.toggleColorMode} color="inherit" sx={{ ml: 2 }}>
+            {theme.palette.mode === "dark" ? (
+              <Brightness7 sx={{ color: "black" }} />
+            ) : (
+              <Brightness4 sx={{ color: "black" }} />
+            )}
+          </IconButton>
           <Button color="inherit" sx={{ color: "black", ml: 2 }}>
             Profile
           </Button>

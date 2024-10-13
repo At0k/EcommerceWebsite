@@ -51,7 +51,6 @@ public class UserController {
         String password = loginRequest.getPassword();
         User user = userService.findByEmail(email);
         if (userService.findByEmail(user.getEmail()) != null) {
-
             if (password.equals(user.getPassword()) && user != null) {
                 // Store user info in session
                 session.setAttribute("email", user.getEmail());
@@ -99,9 +98,18 @@ public class UserController {
         return ResponseEntity.ok("Logout successful");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User userDetails) {
-        User updatedUser = userService.updateUser(id, userDetails);
+    // @PutMapping("/{id}")
+    // public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User userDetails) {
+    //     User updatedUser = userService.updateUser(id, userDetails);
+    //     if (updatedUser != null) {
+    //         return ResponseEntity.ok(updatedUser);
+    //     }
+    //     return ResponseEntity.notFound().build();
+    // }
+
+    @PutMapping("/email/{email}")
+    public ResponseEntity<User> updateUserByEmail(@PathVariable String email, @RequestBody User userDetails) {
+        User updatedUser = userService.updateUserByEmail(email, userDetails);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         }
