@@ -1,101 +1,58 @@
-import { Box, Typography, useTheme, Button, Grid } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
-import { tokens } from "../../../base/theme";
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import Header from "../../../components/Header";
 import React, { useState, useEffect } from "react";
+import { Box, Typography, Grid, Button } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import GetItemsManager from "../../getItemManager";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-const SuburbManagement = () => {
-    const [ suburbDetails, setSuburbDetails] = useState([]);
-
+const ProductDetails = () => {
+    const [product, setProduct] = useState(null);
+    const { id } = useParams(); // Fetch product ID from the URL params
+    const navigate = useNavigate();
 
     useEffect(() => {
-        GetItemsManager.getSuburbsManager()
-            .then((result) => {
-                // Assuming result.data is the array you want
-                const suburbData = result.data || [];
-                setSuburbDetails(suburbData);
-            })
-            .catch((error) => {
-                console.error("Error fetching transaction data:", error);
-            });
-    }, []);
-    
-    
+        if (id) {
+            GetItemsManager.getProductById(id).then((result) => {
+                setProduct(result.data); // Assuming result.data contains the product details
+            }).catch((error) => console.error("Error fetching product:", error));
+        }
+    }, [id]);
 
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    
-
-
-    const columns = [
-        { field: "id", headerName: "ID" },
-        { field: "name", headerName: "NAME", flex: 1, cellClassName: "name-column--cell" },
-        { field: "fee", headerName: "FEE", flex: 1 },
-        {
-            field: "edit",
-            headerName: "EDIT",
-            flex: 1,
-            renderCell: ({ row }) => {
-                return (
-                    <Link to={`/editTransaction/${row.id}`} style={{ textDecoration: "none" }}>
-                        <Box
-                            width="40%"
-                            m="0 auto"
-                            p="5px"
-                            justifyContent="center"
-                            alignItems="center" // Added for vertical alignment
-                            backgroundColor={
-                                row.access === "admin"
-                                    ? colors.greenAccent[600]
-                                    : colors.greenAccent[700]
-                            }
-                            borderRadius="4px"
-                        >
-                            <EditOutlinedIcon />
-        
-                            <Typography variant="body1" color={colors.grey[100]} sx={{ ml: "5px" }}>
-                                Edit
-                            </Typography>
-                        </Box>
-                    </Link>
-                );
-            },
-        },
-        
-    ];
-    
-      
+    // Handling cases where product data is still being fetched
+    if (!product) {
+        return <Typography variant="h6">Loading product details...</Typography>;
+    }
 
     return (
         <Box>
-            <Header title="Transactions" subtitle="Managing the Transactions" />
-            <Box>
-                <DataGrid
-                    rows={suburbDetails}
-                    columns={columns}
-                    pageSize={12}
-                />
-            </Box>
-            <Link to="/add-suburb-manager" style={{ textDecoration: 'none' }}>
-                <Grid container justifyContent="flex-end">
-                    <Box sx={{ m: 2, }}>
-                        <Button 
-                            startIcon={<PersonAddAltOutlinedIcon />}
-                            justifyContent="center"
-                            variant="contained"
-                            size="large"
-                            color = "success"
-                            >Add Suburbs
-                        </Button>
-                    </Box>
+            <Typography variant="h4" gutterBottom>Product List</Typography>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant="h6" gutterBottom>Name:</Typography>
+                    <Typography variant="body1">{product.name}</Typography>
                 </Grid>
-            </Link>
+                <Grid item xs={12}>
+                    <Typography variant="h6" gutterBottom>Price:</Typography>
+                    <Typography variant="body1">{product.price}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="h6" gutterBottom>Category:</Typography>
+                    <Typography variant="body1">{product.category}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="h6" gutterBottom>Description:</Typography>
+                    <Typography variant="body1">{product.description}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={() => navigate(`/edit-product/${id}`)}
+                    >
+                        Edit Product
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
 };
 
-export default SuburbManagement;
+export default ProductDetails;
