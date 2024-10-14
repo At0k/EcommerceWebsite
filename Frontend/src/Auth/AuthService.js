@@ -69,6 +69,20 @@ const AuthService = {
       }
     },
 
+    // Implement logout function
+    logout() {
+      // Clear session or user data
+      localStorage.removeItem('role');  // Clear user role from localStorage
+      localStorage.removeItem('user');  // Clear other stored user info (if needed)
+      
+      // If you store data in sessionStorage instead of localStorage, you can clear it like this:
+      // sessionStorage.removeItem('role');
+      // sessionStorage.removeItem('user');
+
+      // Optionally, you can send a request to your backend to invalidate the session or token
+      console.log('User logged out');
+    },
+
     async billing(name, address, city, postcode, country) {
       //  const username = await localStorage.getItem('username');
     

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CartContext } from './cart/CartContext';// Import your CartContext
-
+import { CartContext } from '../cart/CartContext';
 
 function Product({ code, name, price, image, description }) {
   const { addToCart } = useContext(CartContext); // Get the addToCart function from context
@@ -45,6 +44,3 @@ function Product({ code, name, price, image, description }) {
 }
 
 export default Product;
-
-
-

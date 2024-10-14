@@ -1,22 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import AuthService from '../Auth/AuthService'; 
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function PaymentPage() {
-
-  //-----------------------------------------
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState(""); 
   const [billingInfo, setBillingInfo] = useState("");
+  const [orderData, setOrderData] = useState([]); // State to hold order data
+  const [totalPrice, setTotalPrice] = useState(0); // State for total price
   const navigate = useNavigate();
-
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const handleInputChange = (e) => {
@@ -34,12 +32,24 @@ export default function PaymentPage() {
       
       if (success) {
         alert("Payment Success");
-        navigate("/products"); 
+        setPaymentSuccess(true); // Set payment success to true
+        
+        // Fetch new order data here or update the orderData state as needed
+        const newOrder = {
+          orderId: Math.random().toString(36).substr(2, 9), // Replace with your order ID logic
+          totalAmount: 100.00 // Replace with your calculated amount
+        };
+        
+        // Update order data with the new order
+        setOrderData(prevOrders => [...prevOrders, newOrder]);
+        
+        // Reset total price if needed
+        setTotalPrice(prevTotal => prevTotal + newOrder.totalAmount);
+        
       } else {
         alert("Payment failed. Please try again.");
       }
     } catch (error) {
-
       console.error("Payment error:", error);
       alert("An error occurred during payment.");
     }
@@ -148,22 +158,22 @@ export default function PaymentPage() {
         {/* <div className="col-lg-6">
           <div className="border p-4 rounded shadow-sm">
             <h5 className="mb-3">Order Summary</h5>
-            {products.map((product, i) => (
-              <div key={i} className="d-flex justify-content-between mb-2">
-                <span>
-                  {product.name} x {product.quantity}
-                </span>
-                <span>{product.price * product.quantity} Ks</span>
-              </div>
-            ))}
-
-            <hr />
-
-            <div className="d-flex justify-content-between mb-3">
-              <span>Total Price:</span>
-              <strong>{totalPrice} Ks</strong>
+            {orderData.length > 0 ? (
+              orderData.map((order, i) => (
+                <div key={i} className="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                  <span>
+                    Order ID: {order.orderId}
+                  </span>
+                  <span>Total Amount: RM{order.totalAmount.toFixed(2)}</span>
+                </div>
+              ))
+            ) : (
+              <p>No orders yet. Please complete your payment.</p>
+            )}
+            <div className="d-flex justify-content-between mt-3">
+              <span><strong>Total Price:</strong></span>
+              <strong>RM{totalPrice.toFixed(2)}</strong>
             </div>
-
             <Link to="/products" className="btn btn-outline-dark w-100 mb-2">
               <FontAwesomeIcon icon={["fas", "cart-arrow-down"]} /> Back to Cart
             </Link>
@@ -173,5 +183,3 @@ export default function PaymentPage() {
     </div>
   );
 }
-
-// export default PaymentPage;

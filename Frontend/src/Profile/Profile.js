@@ -50,45 +50,46 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch('/api/Users/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userDetails),
-        credentials: 'include',
-      });
+        const response = await fetch('/api/Users/profile', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userDetails),
+            credentials: 'include',
+        });
 
-      if (response.ok) {
-        setProfile(userDetails);  // Update profile state after saving
-        setEditMode(false);       // Exit edit mode
-      } else {
-        console.error('Failed to update profile');
-      }
+        if (response.ok) {
+            setProfile(userDetails);  // Update profile state after saving
+            setEditMode(false);       // Exit edit mode
+            alert("Profile updated successfully!"); // Show success message
+        } else {
+            console.error('Failed to update profile');
+        }
     } catch (error) {
-      console.error('Error updating profile:', error);
+        console.error('Error updating profile:', error);
     }
 
     try {
-      // Using 'profile.email' instead of 'profile.id'
-      const response = await fetch(`/api/Users/email/${profile.email}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userDetails),  // Send updated details
-        credentials: 'include',  // Include session info
-      });
+        const response = await fetch(`http://localhost:8082/api/Users/email/${profile.email}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userDetails),  // Send updated details
+            credentials: 'include',  // Include session info
+        });
   
-      if (response.ok) {
-        const updatedProfile = await response.json();  // Get updated profile from response
-        setProfile(updatedProfile);  // Update profile state with response data
-        setEditMode(false);  // Exit edit mode
-      } else {
-        console.error('Failed to update profile');
-      }
+        if (response.ok) {
+            const updatedProfile = await response.json();  // Get updated profile from response
+            setProfile(updatedProfile);  // Update profile state with response data
+            setEditMode(false);  // Exit edit mode
+            alert("Profile updated successfully!"); // Show success message
+        } else {
+            console.error('Failed to update profile');
+        }
     } catch (error) {
-      console.error('Error updating profile:', error);
+        console.error('Error updating profile:', error);
     }
   };
 
@@ -109,7 +110,7 @@ const Profile = () => {
 
   return profile ? (
     <div className="profile-page">
-      <button className="back-button" onClick={handleBack}>Back to Landing</button>
+      <button className="back-button" onClick={handleBack}>Back to Homepage</button>
 
       <div className="user-details">
         <h2>{profile.fullname}</h2>

@@ -1,19 +1,27 @@
 import React, { useContext } from 'react';
-import { CartContext } from './CartContext';
+import { CartContext } from '../cart/CartContext';
 import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext); // Make sure clearCart is being accessed
   const navigate = useNavigate();
 
   const handleConfirmOrder = async () => {
+    console.log('Order button clicked');
+
     const orderDetails = {
-      productList: cartItems,
-      orderDate: new Date(), // Add any other order details you need
+      orderId: Math.floor(Math.random() * 10000), // Generate a random order ID
+      productList: cartItems.map(item => ({
+        code: item.code,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      orderDate: new Date().toISOString().split('T')[0],
     };
 
     try {
-      const response = await fetch('http://localhost:8082/api/order', {
+      const response = await fetch('http://localhost:8082/api/Order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,13 +30,15 @@ const Checkout = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create order');
+        const errorResponse = await response.text();
+        throw new Error(`Failed to create order: ${errorResponse}`);
       }
 
       const order = await response.json();
       console.log('Order created:', order);
-      // Optionally navigate to an order confirmation page or clear the cart
-      navigate('/order-confirmation');
+
+      console.log('Navigating to payment page...');
+      navigate('/payment');
     } catch (error) {
       console.error('Error:', error);
     }

@@ -98,15 +98,6 @@ public class UserController {
         return ResponseEntity.ok("Logout successful");
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User userDetails) {
-    //     User updatedUser = userService.updateUser(id, userDetails);
-    //     if (updatedUser != null) {
-    //         return ResponseEntity.ok(updatedUser);
-    //     }
-    //     return ResponseEntity.notFound().build();
-    // }
-
     @PutMapping("/email/{email}")
     public ResponseEntity<User> updateUserByEmail(@PathVariable String email, @RequestBody User userDetails) {
         User updatedUser = userService.updateUserByEmail(email, userDetails);

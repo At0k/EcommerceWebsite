@@ -74,6 +74,7 @@
 
 import React, { useContext } from 'react';
 import { CartContext } from './CartContext';
+import { CartProvider } from './CartContext';
 import { useNavigate } from 'react-router-dom';
 
 function Cart() {
@@ -87,6 +88,10 @@ function Cart() {
   const handleCheckout = () => {
     // Navigate to the checkout page
     navigate('/checkout');
+  };
+
+  const handleQuantityChange = (code, quantity) => {
+    updateQuantity(code, quantity);
   };
 
   return (
