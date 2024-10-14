@@ -70,9 +70,11 @@ function ProductList() {
               {products.map((product) => (
                 <Product 
                   key={product.id} 
+                  code={product.code}
                   name={product.productName} 
                   price={product.price} 
                   image={product.image} // Pass the image URL to Product component
+                  description={product.description}
                 />
               ))}
             </div>

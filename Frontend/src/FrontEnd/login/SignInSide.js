@@ -29,6 +29,7 @@ function Copyright(props) {
   );
 }
 
+
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
@@ -36,6 +37,8 @@ export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedInAdmin, setIsLoggedInAdmin] = useState(false); 
+  const [isResetPassword, setIsResetPassword] = useState(false); // Track reset password state
+  const [newPassword, setNewPassword] = useState(""); // For resetting password
 
   const navigate = useNavigate();
 
@@ -81,6 +84,34 @@ export default function SignInSide() {
       console.error("Login error:", error);
       alert("An error occurred while logging in.");
     }
+
+    if (!isResetPassword) {
+      try {
+        const success = await AuthService.login(email, password);
+        if (success) { /* ... role-based navigation */ }
+      } catch (error) { /* Handle error */ }    
+      } else {
+      // Handle normal login form submission
+      try {
+        const success = await AuthService.login(email, password);
+        if (success) {
+          const userType = localStorage.getItem('role');
+          if (userType === "Customer") {
+            navigate("/Landing");
+          } else if (userType === "Staff") {
+            navigate("/dashboard-staff");
+          } else {
+            alert("Unknown user role.");
+          }
+        } else {
+          alert("Login failed. Please check your credentials.");
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("An error occurred while logging in.");
+      }
+  };
+
   }
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -114,10 +145,10 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              {isResetPassword ? 'Reset Password' : 'Sign in'}
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
+              <TextField
                 onChange={(e) => setEmail(e.target.value)}
                 margin="normal"
                 required
@@ -128,34 +159,49 @@ export default function SignInSide() {
                 autoComplete="email"
                 autoFocus
               />
-              <TextField
-                onChange={(e) => setPassword(e.target.value)}
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              {isResetPassword ? (
+                <TextField
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="newPassword"
+                  label="New Password"
+                  type="password"
+                  id="newPassword"
+                  autoComplete="new-password"
+                />
+              ) : (
+                <TextField
+                  onChange={(e) => setPassword(e.target.value)}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              )}
+              {!isResetPassword && (
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+              )}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                
               >
-                Sign In
+                {isResetPassword ? 'Reset Password' : 'Sign In'}
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
+                  <Link href="#" variant="body2" onClick={() => setIsResetPassword(!isResetPassword)}>
+                    {isResetPassword ? 'Back to Sign In' : 'Forgot password?'}
                   </Link>
                 </Grid>
                 <Grid item>
@@ -164,7 +210,6 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

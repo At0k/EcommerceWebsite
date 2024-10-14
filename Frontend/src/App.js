@@ -15,6 +15,7 @@ import Profile from "./Profile/Profile";
 import Cart from "./cart/Cart";
 import TeamAdmin from "./HodViews/scense/team/index";
 import CartProvider from './cart/CartContext'; // Ensure this path is correct
+import Checkout from './Payment/Checkout'; 
 import React from "react";
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/team-admin" element={<TeamAdmin />} />
               <Route path = "/sign-up" element ={<SignUpSide/>} />
+              <Route path="/checkout" element={<Checkout />} />
 
         
             </Routes>
