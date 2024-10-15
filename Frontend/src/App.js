@@ -26,7 +26,8 @@ function App() {
   const noHeaderRoutes = ["/sign-in", "/sign-up", "/forgot-password", "/dashboard-staff"];
 
   // Check if the current route is in the noHeaderRoutes list
-  const shouldShowHeader = !noHeaderRoutes.some(route => location.pathname.startsWith(route));
+  // const shouldShowHeader = !noHeaderRoutes.some(route => location.pathname.startsWith(route));
+  const shouldShowHeader = !noHeaderRoutes.includes(location.pathname);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

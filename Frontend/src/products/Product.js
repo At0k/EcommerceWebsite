@@ -14,7 +14,7 @@ function Product({ code, name, price, image, description }) {
   return (
     <div className="col">
       <div className="card shadow-sm" style={{ height: '100%' }}>
-        <Link to={`/products/${code}`} replace>
+        <Link to={``} replace>
           <img
             className="card-img-top bg-dark cover"
             height="200"

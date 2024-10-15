@@ -147,38 +147,14 @@ export default function PaymentPage() {
           ) : (
             <div>
               <h3>Payment Successful!</h3>
-              <Link to="/order-history" className="btn btn-primary w-100 mt-3">
-                View Order
+              <Link to="/" className="btn btn-primary w-100 mt-3">
+                Back to Homepage
               </Link>
             </div>
           )}
         </div>
 
-        {/* Right Section - Order Summary */}
-        {/* <div className="col-lg-6">
-          <div className="border p-4 rounded shadow-sm">
-            <h5 className="mb-3">Order Summary</h5>
-            {orderData.length > 0 ? (
-              orderData.map((order, i) => (
-                <div key={i} className="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
-                  <span>
-                    Order ID: {order.orderId}
-                  </span>
-                  <span>Total Amount: RM{order.totalAmount.toFixed(2)}</span>
-                </div>
-              ))
-            ) : (
-              <p>No orders yet. Please complete your payment.</p>
-            )}
-            <div className="d-flex justify-content-between mt-3">
-              <span><strong>Total Price:</strong></span>
-              <strong>RM{totalPrice.toFixed(2)}</strong>
-            </div>
-            <Link to="/products" className="btn btn-outline-dark w-100 mb-2">
-              <FontAwesomeIcon icon={["fas", "cart-arrow-down"]} /> Back to Cart
-            </Link>
-          </div>
-        </div> */}
+        
       </div>
     </div>
   );

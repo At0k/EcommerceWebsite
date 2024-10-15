@@ -20,12 +20,12 @@ public class Order {
     private double totalAmount;
     private User user;
 
-    public Order(int orderId, LocalDate orderDate, List<Product> productList, User user) {
+    public Order(int orderId, LocalDate orderDate, List<Product> productList) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.productList = productList;
         this.totalAmount = calculateTotalAmount();
-        this.user = user; 
+         
     }                                                                      
 
     //setter

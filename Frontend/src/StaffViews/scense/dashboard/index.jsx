@@ -168,7 +168,7 @@ const DashboardStaff = () => {
             <Box mt="20px">
                 <Typography variant="h6">Overview</Typography>
                 <Typography variant="body1" mt="10px">
-                    Welcome to the Wesitex staff dashboard! Here, you can manage products, view transactions, and access other essential features.
+                    Welcome to the staff dashboard! 
                 </Typography>
             </Box>
 

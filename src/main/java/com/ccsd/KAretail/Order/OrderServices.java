@@ -50,7 +50,7 @@ public class OrderServices {
         int orderId = generateOrderId();
         LocalDate orderDate = LocalDate.now();
         
-        Order newOrder = new Order(orderId, orderDate, productList, user); // Include the User object
+        Order newOrder = new Order(orderId, orderDate, productList); // Include the User object
         return orderRepository.save(newOrder);
     }
 
