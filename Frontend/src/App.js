@@ -1,7 +1,9 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
+
 import { useMode, ColorModeContext } from "../src/base/theme"; 
 import Header from "./components/Header"; 
+
 import AdminPages from "./AdminPages";
 import ProductDetail from "./products/detail/ProductDetail";
 import ProductList from "./products/ProductList";

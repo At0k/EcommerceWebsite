@@ -5,6 +5,14 @@ import Header from "../../../components/Header";
 import React, { useState, useEffect } from "react";
 import AuthService from '../../../Auth/AuthService';
 
+interface User {
+    id: string; // or number
+    username: string;
+    fullname: string;
+    email: string; 
+    phoneNo: string;
+    role: string;
+  }
 const TeamAdmin = () => {
  
   const [users, setUsers] = useState([]);
@@ -35,8 +43,9 @@ const TeamAdmin = () => {
 
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+
         <Header title="Team" subtitle="Khairul Ameng the Team" />
+
       </Box>
 
       <Box mt={4}>
@@ -44,6 +53,7 @@ const TeamAdmin = () => {
           <Table>
             <TableHead>
               <TableRow>
+
                 <TableCell>Username</TableCell>
                 <TableCell>Fullname</TableCell>
                 <TableCell>Email</TableCell>
@@ -54,6 +64,7 @@ const TeamAdmin = () => {
             <TableBody>
               {users.map((user) => (
                 <TableRow key={user.id}> {/* Correct key for rows */}
+
                   <TableCell>{user.username}</TableCell>
                   <TableCell>{user.fullname}</TableCell>
                   <TableCell>{user.email}</TableCell>

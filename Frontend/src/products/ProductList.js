@@ -60,8 +60,9 @@ function ProductList() {
         <div className="col-lg-12">
           <div className="d-flex flex-column h-100">
             <div className="row mb-3">
-              <div className="col-lg-12 d-flex flex-row">
+
                 <button onClick={changeViewType} className="btn btn-outline-dark">Toggle View</button>
+
               </div>
             </div>
 

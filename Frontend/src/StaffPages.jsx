@@ -3,11 +3,12 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import DashboardStaff from "./StaffViews/scense/dashboard";
 import DriverManager from "./StaffViews/scense/drivers";
-import AddDriver from "./StaffViews/scense/drivers/addDriver";
+import AddDriver from "./StaffViews/scense/drivers/index";
 import TransactionsManager from "./StaffViews/scense/transactions";
 import AddTransactions from "./StaffViews/scense/transactions/addTransactions";
 import SuburbManagement from "./StaffViews/scense/suburbs";
 import AddSuburb from "./StaffViews/scense/suburbs/AddSuburb";
+
 import ProductTable from "./StaffViews/ProductTable"; // Import the product table component
 
 const ManagerViewsLayout = ({ children }) => {
@@ -95,6 +96,7 @@ const StaffPages = () => (
             }
         />
     </Routes>
+
 );
 
 export default StaffPages;

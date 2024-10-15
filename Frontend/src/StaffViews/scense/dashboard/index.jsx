@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
     Box,
@@ -16,9 +17,11 @@ import {
     DialogTitle,
     TextField,
 } from "@mui/material";
-import Header from "../../../components/Header";
 
-const DashboardStaff = () => {
+import Header from "../../../components/Header";
+import { useState, useEffect } from "react";
+
+
     const [products, setProducts] = useState([]); // State to hold products
     const [loading, setLoading] = useState(true); // State to manage loading status
     const [editProduct, setEditProduct] = useState(null); // State for the product being edited

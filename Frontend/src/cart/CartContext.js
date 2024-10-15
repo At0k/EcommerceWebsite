@@ -1,14 +1,16 @@
 
-
 import React, { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
+
 export const CartProvider = ({ children }) => {
+
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
+
       const existingItem = prevItems.find(item => item.code === product.code);
       if (existingItem) {
         return prevItems.map(item => 
@@ -33,6 +35,7 @@ export const CartProvider = ({ children }) => {
     setCartItems(prevItems => 
       prevItems.map(item => 
         item.code === code ? { ...item, quantity } : item
+
       )
     );
   };
@@ -43,3 +46,4 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+

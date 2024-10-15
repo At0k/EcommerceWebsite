@@ -94,6 +94,15 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    // @PutMapping("/email/{email}")
+    // public ResponseEntity<User> updateUserByEmail(@PathVariable String email, @RequestBody User userDetails) {
+    //    // User updatedUser = userService.updateUserByEmail(email, userDetails);
+    //     if (updatedUser != null) {
+    //         return ResponseEntity.ok(updatedUser);
+    //     }
+    //     return ResponseEntity.notFound().build();
+    // }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
@@ -152,5 +161,3 @@ public class UserController {
     // }
 
 }
-
-

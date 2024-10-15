@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import AuthService from '../Auth/AuthService'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -117,14 +118,19 @@ export default function PaymentPage() {
 
               <div className="mb-3">
                 <label className="form-label">Country</label>
-                <input
-                  type="text"
-                  className="form-control"
+                <select
+                  className="form-select"
                   name="country"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   required
-                />
+                >
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="Thailand">Thailand</option>
+                  <option value="Brunei">Brunei</option>
+                  <option value="Indonesia">Indonesia</option>
+                </select>
               </div>
 
               <div className="mb-3">
@@ -154,7 +160,7 @@ export default function PaymentPage() {
           )}
         </div>
 
-        
+
       </div>
     </div>
   );
