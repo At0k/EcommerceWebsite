@@ -43,6 +43,7 @@ public class BillingController {
         if (updatedBilling != null) {
             return ResponseEntity.ok(updatedBilling);
         }
+
         return ResponseEntity.notFound().build();
     }
 
