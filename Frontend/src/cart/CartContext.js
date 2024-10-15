@@ -1,34 +1,41 @@
+
 import React, { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
-const CartProvider = ({ children }) => {
+
+export const CartProvider = ({ children }) => {
+
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+
+      const existingItem = prevItems.find(item => item.code === product.code);
       if (existingItem) {
-        return prevItems.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 } // Increase quantity by 1
-            : item
+        return prevItems.map(item => 
+          item.code === product.code 
+          ? { ...item, quantity: item.quantity + 1 } 
+          : item
         );
-      } else {
-        return [...prevItems, { ...product, quantity: 1 }]; // Default quantity to 1
       }
+      return [...prevItems, { ...product, quantity: 1 }];
     });
   };
 
-  const removeFromCart = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const removeFromCart = (code) => {
+    setCartItems(prevItems => prevItems.filter(item => item.code !== code));
   };
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return; // Prevent setting quantity to less than 1
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
+  const clearCart = () => {
+    setCartItems([]); // Reset cartItems to an empty array
+  };
+  
+  const updateQuantity = (code, quantity) => {
+    setCartItems(prevItems => 
+      prevItems.map(item => 
+        item.code === code ? { ...item, quantity } : item
+
       )
     );
   };
@@ -40,4 +47,3 @@ const CartProvider = ({ children }) => {
   );
 };
 
-export default CartProvider;

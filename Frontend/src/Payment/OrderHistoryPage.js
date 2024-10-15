@@ -3,18 +3,6 @@ import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 
 function OrderHistoryPage() {
   // Sample data for orders (you might replace this with fetched data from an API)
-  const orders = [
-    {
-      id: 1,
-      products: [
-        { name: "Nillkin iPhone X cover", price: 10000, quantity: 1 },
-        { name: "Remax USB Cable", price: 5000, quantity: 2 },
-      ],
-      totalPrice: 20000,
-      date: "2024-10-11",
-    },
-    // You can add more orders here
-  ];
 
   return (
     <div className="container mt-5 py-4 px-xl-5">

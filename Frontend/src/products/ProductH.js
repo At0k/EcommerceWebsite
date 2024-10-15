@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from '../nillkin-case-1.jpg'; // Use your actual product images
 
-function ProductH({ name, price, percentOff }) {
+function ProductH({ name, price, Image }) {
   let offPrice = `${price}Ks`;
   let discountBadge = null;
 

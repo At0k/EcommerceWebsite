@@ -7,10 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ccsd.KAretail.Product.Product;
+import com.ccsd.KAretail.Users.User;
 
 @Service
 public class OrderServices {
-     
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -30,26 +31,30 @@ public class OrderServices {
         Optional<Order> orderOpt = orderRepository.findById(id);
         if (orderOpt.isPresent()) {
 
-            Order Order = orderOpt.get();
-            Order.setOrderId(orderDetails.getOrderId());
-            Order.setOrderDate(orderDetails.getOrderDate());
-            return orderRepository.save(Order);
+            Order order = orderOpt.get();
+            order.setOrderId(orderDetails.getOrderId());
+            order.setOrderDate(orderDetails.getOrderDate());
+            order.setProductList(orderDetails.getProductList());
+            order.setUser(orderDetails.getUser()); // Update the user as well
+            return orderRepository.save(order);
         }
         return null;
     }
+
     public void deleteOrder(String id) {
         orderRepository.deleteById(id);
     }
 
-    //checkout process
-    public Order checkout(List<Product> productList){
+    // Checkout process with user information
+    public Order checkout(List<Product> productList, User user) {
         int orderId = generateOrderId();
         LocalDate orderDate = LocalDate.now();
-        Order newOrder = new Order(orderId, orderDate, productList);
+        
+        Order newOrder = new Order(orderId, orderDate, productList); // Include the User object
         return orderRepository.save(newOrder);
     }
 
     private int generateOrderId() {
         return (int) (Math.random() * 10000); 
     }
-} 
+}

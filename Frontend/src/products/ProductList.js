@@ -1,23 +1,45 @@
+
 import { Link } from "react-router-dom";
 import Product from "./Product"; 
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
-
-// Define your product data
-const products = [
-  { id: 1, name: "Sambal Nyet", price: "RM14.00" },
-  { id: 2, name: "Pau", price: "RM20.00" },
-  { id: 3, name: "Dendeng Nyet Berapi", price: "RM14.99" },
-  { id: 4, name: "Aglio Olio", price: "RM15.00" },
-  { id: 5, name: "Stimbot Paste", price: "RM9.50" },
-];
+import React, { useState, useEffect } from 'react';
 
 function ProductList() {
   const [viewType, setViewType] = useState({ grid: true });
+  const [products, setProducts] = useState([]);  // State to store fetched products
+  const [loading, setLoading] = useState(true);  // State to handle loading state
+  const [error, setError] = useState(null);      // State to handle errors
 
   function changeViewType() {
     setViewType({ grid: !viewType.grid });
+  }
+
+  // Fetch product data from backend
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:8082/api/product");
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setProducts(data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts(); // Fetch products only once when component mounts
+  }, []); // Empty dependency array ensures it runs only once
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -38,44 +60,24 @@ function ProductList() {
         <div className="col-lg-12">
           <div className="d-flex flex-column h-100">
             <div className="row mb-3">
-              <div className="col-lg-12 d-flex flex-row">
-                {/* <div className="input-group">
-                  <input className="form-control" type="text" placeholder="Search products..." aria-label="search input" />
-                  <button className="btn btn-outline-dark">
-                    <FontAwesomeIcon icon={["fas", "search"]} />
-                  </button>
-                </div>
-                <button className="btn btn-outline-dark ms-2" onClick={changeViewType}>
-                  <FontAwesomeIcon icon={["fas", viewType.grid ? "th-list" : "th-large"]} />
-                </button> */}
+
+                <button onClick={changeViewType} className="btn btn-outline-dark">Toggle View</button>
+
               </div>
             </div>
+
+            {/* Rendering fetched products */}
             <div className={`row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0 ${viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2"}`}>
               {products.map((product) => (
-                <Product key={product.id} name={product.name} price={product.price} />
+                <Product 
+                  key={product.id} 
+                  code={product.code}
+                  name={product.productName} 
+                  price={product.price} 
+                  image={product.image} // Pass the image URL to Product component
+                  description={product.description}
+                />
               ))}
-            </div>
-            <div className="d-flex align-items-center mt-auto">
-              <span className="text-muted small d-none d-md-inline">Showing {products.length} of {products.length}</span>
-              <nav aria-label="Page navigation example" className="ms-auto">
-                <ul className="pagination my-0">
-                  <li className="page-item">
-                    <a className="page-link" href="!#">Previous</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">1</a>
-                  </li>
-                  <li className="page-item active">
-                    <a className="page-link" href="!#">2</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">3</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">Next</a>
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
@@ -85,3 +87,4 @@ function ProductList() {
 }
 
 export default ProductList;
+

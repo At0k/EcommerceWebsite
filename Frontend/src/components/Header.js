@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,18 +8,26 @@ import {
   Button,
 } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material"; // Import ShoppingCart icon
-import { Link } from "react-router-dom"; // For routing to cart page
-import { CartContext } from "../cart/CartContext"; // Adjust the import path
+
+import { Link, useNavigate } from "react-router-dom"; // For routing to cart and other pages
+import AuthService from '../Auth/AuthService'; // Assuming AuthService handles session management
 
 const Header = ({ title }) => {
-  const { cartItems } = useContext(CartContext); // Access cart items
-  const distinctProductCount = cartItems.length; // Count distinct products in the cart
+  const navigate = useNavigate(); // For programmatic navigation
+
+  // Handle Logout
+  const handleLogout = () => {
+    AuthService.logout(); // Call logout function from AuthService
+    alert("You've been signed out");
+    navigate("/sign-in"); // Navigate to sign-in page after logout
+  };
+
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "white", boxShadow: 3 }}>
       <Toolbar>
         <Box display="flex" flexGrow={1} alignItems="center">
-          <Link to="/Landing" style={{ textDecoration: 'none' }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <Typography variant="h6" color="black" component="div" sx={{ mr: 2 }}>
               {title}
             </Typography>
@@ -58,16 +66,11 @@ const Header = ({ title }) => {
             </Button>
           </Link>
 
-          {/* Theme Toggle Button */}
-          <IconButton onClick={colorMode.toggleColorMode} color="inherit" sx={{ ml: 2 }}>
-            {theme.palette.mode === "dark" ? (
-              <Brightness7 sx={{ color: "black" }} />
-            ) : (
-              <Brightness4 sx={{ color: "black" }} />
-            )}
-          </IconButton>
-          <Button color="inherit" sx={{ color: "black", ml: 2 }}>
-            Profile
+
+          {/* Logout Button */}
+          <Button color="inherit" sx={{ color: "black", ml: 2 }} onClick={handleLogout}>
+            Logout
+
           </Button>
         </Box>
       </Toolbar>

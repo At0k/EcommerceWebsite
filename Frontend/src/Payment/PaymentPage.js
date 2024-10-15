@@ -1,63 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function PaymentPage() {
-  const [billingInfo, setBillingInfo] = useState({
-    name: "",
-    address: "",
-    city: "",
-    postalCode: "",
-    country: "Malaysia", // Set default country
-    paymentMethod: "creditCard",
-  });
-
-  const [products] = useState([
-    { id: 1, name: "Nillkin iPhone X cover", price: 100.00, quantity: 1 },
-    { id: 2, name: "Remax USB Cable", price: 50.00, quantity: 2 },
-  ]);
 import AuthService from '../Auth/AuthService'; 
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function PaymentPage() {
-  // const [billingInfo, setBillingInfo] = useState({
-  //   name: "",
-  //   address: "",
-  //   city: "",
-  //   postalCode: "",
-  //   country: "",
-  //   paymentMethod: "creditCard",
-  // });
-
-  // const [products] = useState([
-  //   { id: 1, name: "Nillkin iPhone X cover", price: 10000, quantity: 1 },
-  //   { id: 2, name: "Remax USB Cable", price: 5000, quantity: 2 },
-  // ]);
-
-  
-
-  // const totalPrice = products.reduce(
-  //   (acc, product) => acc + product.price * product.quantity,
-  //   0
-  // );
-
-  // const handlePaymentSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Simulate payment process
-  //   console.log("Payment details:", billingInfo);
-  //   setPaymentSuccess(true);
-  // };
-
-  //-----------------------------------------
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState(""); 
   const [billingInfo, setBillingInfo] = useState("");
+  const [orderData, setOrderData] = useState([]); // State to hold order data
+  const [totalPrice, setTotalPrice] = useState(0); // State for total price
   const navigate = useNavigate();
-
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const handleInputChange = (e) => {
@@ -75,12 +33,24 @@ export default function PaymentPage() {
       
       if (success) {
         alert("Payment Success");
-        navigate("/products"); 
+        setPaymentSuccess(true); // Set payment success to true
+        
+        // Fetch new order data here or update the orderData state as needed
+        const newOrder = {
+          orderId: Math.random().toString(36).substr(2, 9), // Replace with your order ID logic
+          totalAmount: 100.00 // Replace with your calculated amount
+        };
+        
+        // Update order data with the new order
+        setOrderData(prevOrders => [...prevOrders, newOrder]);
+        
+        // Reset total price if needed
+        setTotalPrice(prevTotal => prevTotal + newOrder.totalAmount);
+        
       } else {
         alert("Payment failed. Please try again.");
       }
     } catch (error) {
-
       console.error("Payment error:", error);
       alert("An error occurred during payment.");
     }
@@ -183,41 +153,15 @@ export default function PaymentPage() {
           ) : (
             <div>
               <h3>Payment Successful!</h3>
-              <Link to="/order-history" className="btn btn-primary w-100 mt-3">
-                View Order
+              <Link to="/" className="btn btn-primary w-100 mt-3">
+                Back to Homepage
               </Link>
             </div>
           )}
         </div>
 
-        {/* Right Section - Order Summary */}
-        {/* <div className="col-lg-6">
-          <div className="border p-4 rounded shadow-sm">
-            <h5 className="mb-3">Order Summary</h5>
-            {products.map((product, i) => (
-              <div key={i} className="d-flex justify-content-between mb-2">
-                <span>
-                  {product.name} x {product.quantity}
-                </span>
-                <span>RM {product.price * product.quantity}</span>
-              </div>
-            ))}
 
-            <hr />
-
-            <div className="d-flex justify-content-between mb-3">
-              <span>Total Price:</span>
-              <strong>RM {totalPrice.toFixed(2)}</strong>
-            </div>
-
-            <Link to="/products" className="btn btn-outline-dark w-100 mb-2">
-              <FontAwesomeIcon icon={["fas", "cart-arrow-down"]} /> Back to Cart
-            </Link>
-          </div>
-        </div> */}
       </div>
     </div>
   );
 }
-
-// export default PaymentPage;

@@ -92,6 +92,20 @@ const AuthService = {
   
     },
 
+    // Implement logout function
+    logout() {
+      // Clear session or user data
+      localStorage.removeItem('role');  // Clear user role from localStorage
+      localStorage.removeItem('user');  // Clear other stored user info (if needed)
+      
+      // If you store data in sessionStorage instead of localStorage, you can clear it like this:
+      // sessionStorage.removeItem('role');
+      // sessionStorage.removeItem('user');
+
+      // Optionally, you can send a request to your backend to invalidate the session or token
+      console.log('User logged out');
+    },
+
     async billing(name, address, city, postcode, country) {
       //  const username = await localStorage.getItem('username');
     
@@ -127,28 +141,28 @@ const AuthService = {
           throw error;
         }
       },
-      
-      async fetchUsers() {
+
+      async fetchTeamDetail(id) {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/Users`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            
-            if (response.status === 200) {
-                return response.data;
-            }
-          } catch (error) {
-              if (error.response) {
-                  console.error('Server responded with an error:', error.response.data);
-              } else if (error.request) {
-                  console.error('No response received:', error.request);
-              } else {
-                  console.error('Error setting up the request:', error.message);
-              }
-              throw error;
+          const response = await axios.get(`${API_BASE_URL}/Users/${id}`, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+      
+          if (response.status === 200) {
+            return response.data;
           }
+        } catch (error) {
+          if (error.response) {
+            console.error('Server responded with an error:', error.response.data);
+          } else if (error.request) {
+            console.error('No response received:', error.request);
+          } else {
+            console.error('Error setting up the request:', error.message);
+          }
+          throw error;
+        }
       },
 };
 

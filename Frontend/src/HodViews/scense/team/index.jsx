@@ -43,8 +43,9 @@ const TeamAdmin = () => {
 
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Team" subtitle="Anjing the Team" />
+
+        <Header title="Team" subtitle="Khairul Ameng the Team" />
+
       </Box>
 
       <Box mt={4}>
@@ -52,7 +53,7 @@ const TeamAdmin = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
+
                 <TableCell>Username</TableCell>
                 <TableCell>Fullname</TableCell>
                 <TableCell>Email</TableCell>
@@ -63,7 +64,7 @@ const TeamAdmin = () => {
             <TableBody>
               {users.map((user) => (
                 <TableRow key={user.id}> {/* Correct key for rows */}
-                  <TableCell>{user.id}</TableCell>
+
                   <TableCell>{user.username}</TableCell>
                   <TableCell>{user.fullname}</TableCell>
                   <TableCell>{user.email}</TableCell>
@@ -96,4 +97,3 @@ const TeamAdmin = () => {
 };
 
 export default TeamAdmin;
-
